@@ -200,5 +200,5 @@ $Del = split + split + merge$
 
 ### AVL-дерево
 
-## B-дерево
+### B-дерево
 
