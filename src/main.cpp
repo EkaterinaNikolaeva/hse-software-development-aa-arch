@@ -1,10 +1,7 @@
 #include <iostream>
-
-void sayHello() {
-    std::cout << "Hello, World!" << std::endl;
-}
+#include "Hello.hpp"
 
 int main() {
-    sayHello();
+    Hello::sayHello();
     return 0;
 }
