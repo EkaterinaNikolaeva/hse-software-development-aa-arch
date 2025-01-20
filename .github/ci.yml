@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v1
+        with:
+          cmake-version: '3.19.0'
+
+      - name: Build with CMake
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+      - name: Run tests and generate coverage report
+        run: |
+          cd build
+          ctest --output-on-failure --schedule-random -j2
+      #     lcov --capture --directory . --output-file coverage.info
+      #     lcov --remove coverage.info '/usr/*' '*/test/*' --output-file coverage.info
+
+      # - name: Upload to CodeCov
+      #   uses: codecov/codecov-action@v2
+      #   with:
+      #     file: coverage.info
+      #     token: ${{ secrets.CODECOV_TOKEN }} # Убедитесь, что добавили токен в Secrets вашего репозитория
+
+      # - name: Upload to Codacy
+      #   uses: codacy/codacy-coverage-reporter@v1.0.4
+      #   with:
+      #     project_token: ${{ secrets.CODACY_PROJECT_TOKEN }} # Убедитесь, что добавили токен в Secrets вашего репозитория
