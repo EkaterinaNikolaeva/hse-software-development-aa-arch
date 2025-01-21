@@ -17,22 +17,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up CMake
-      uses: lukka/get-cmake@v3
-
-    - name: Set up dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y g++ cmake libgtest-dev
-        sudo apt-get install -y libgmock-dev
-        cd /usr/src/gtest
-        sudo cmake .
-        sudo make
-        sudo cp *.a /usr/lib
-        cd /usr/src/gmock
-        sudo cmake .
-        sudo make
-        sudo cp *.a /usr/lib
+    - name: Install dependencies
+      run: sudo apt-get install -y cmake g++ libgtest-dev
 
     - name: Create build directory
       run: mkdir build
