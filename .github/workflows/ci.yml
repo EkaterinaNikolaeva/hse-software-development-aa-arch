@@ -2,27 +2,46 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y cmake g++ libgtest-dev
-      - name: Build
-        run: cmake . && make
-      - name: Test
-        run: make test
-      # - name: CodeCov Upload
-      #   uses: codecov/codecov-action@v1
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      # - name: Codacy Upload
-      #   uses: codacy/codacy-coverage-reporter-action@v1
-      #   with:
-      #     project_token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-      #     coverage_report: coverage.xml
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up CMake
+      uses: lukka/get-cmake@v3
+
+    - name: Set up dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y g++ cmake libgtest-dev
+        sudo apt-get install -y libgmock-dev
+        cd /usr/src/gtest
+        sudo cmake .
+        sudo make
+        sudo cp *.a /usr/lib
+        cd /usr/src/gmock
+        sudo cmake .
+        sudo make
+        sudo cp *.a /usr/lib
+
+    - name: Create build directory
+      run: mkdir build
+
+    - name: Configure CMake
+      run: cmake -S . -B build
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run tests
+      run: ctest --test-dir build
