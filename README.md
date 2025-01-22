@@ -1,4 +1,8 @@
 # hse-software-development-aa-arch
+![Build Status](https://github.com/EkaterinaNikolaeva/hse-software-development-aa-arch/actions/workflows/ci.yml/badge.svg)
+![codecov](https://codecov.io/github/EkaterinaNikolaeva/hse-software-development-aa-arch/graph/badge.svg?token=3TD7AGNN9H)
+![Codacy Badge](https://app.codacy.com/project/badge/Grade/c6738c14413447e78cebd7ce79f8e130)
+![License](https://img.shields.io/github/license/EkaterinaNikolaeva/hse-software-development-aa-arch)
 
 ## Описание репозитория
 

@@ -1,6 +1,5 @@
-#include <iostream>
 #include "Hello.hpp"
 
-void Hello::sayHello() {
-    std::cout << "Hello, World!" << std::endl;
-}
+#include <iostream>
+
+void Hello::sayHello() { std::cout << "Hello, World!" << std::endl; }
