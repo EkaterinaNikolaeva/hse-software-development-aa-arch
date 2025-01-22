@@ -243,6 +243,69 @@ $Del = split + split + merge$
 
 ### 7. AVL-дерево
 
+AVL-дерево – это BST, у которого поддерживается инвариант, что разница высот левого и
+правого поддерева для каждой вершины не превосходит 1.
+
+#### Вставка
+
+1. **Стандартная вставка**: Выполняется как в обычном BST. Новый элемент добавляется в соответствующее место по правилам бинарного дерева поиска.
+2. **Проверка на балансировку**: Для каждого предка проверяется балансировка. Если разность высот больше 1, выполняется одно из следующих вращений:
+   - **L-вращение**: Если левое поддерево левого ребенка нарушает баланс.
+   - **R-вращение**: Если правое поддерево правого ребенка нарушает баланс.
+   - **LR-вращение**: Если правое поддерево левого ребенка нарушает баланс (сначала выполняется LL, затем RR).
+   - **RL-вращение**: Если левое поддерево правого ребенка нарушает баланс (сначала выполняется RR, затем LL).
+
+```plaintext
+
+	AvlNode rotateRight(AvlNode p){ // right single rotation
+		AvlNode q = p.left;
+		p.left = q.right; // swap inner child
+		q.right = p; // bring q above p
+		TODO // update heights
+		return q; // q replaces p
+	}
+
+	AvlNode rotateLeft(AvlNode p) { ... symmetrical to rotateRight ... }
+
+	AvlNode rotateLeftRight(AvlNode p){ // left-right double rotation
+		p.left = rotateLeft(p.left);
+		return rotateRight(p);
+	}
+
+	AvlNode rotateRightLeft(AvlNode p) { ... symmetrical to rotateLeftRight ... }
+
+	AvlNode rebalance(AvlNode p) {
+		balance = p.right.left - p.left.right
+		if (balance > +1) { // too heavy on the left?
+		if (p.left.left.height >= p.left.right.height) { // left-left heavy?
+		p = rotateRight(p); // fix with single rotation
+		else // left-right heavy?
+		p = rotateLeftRight(p); // fix with double rotation
+		} else if (balance < -1) { // too heavy on the right?
+		if (p.right.right.height >= p.right.left.height) { // right-right heavy?
+		p = rotateLeft(p); // fix with single rotation
+		else // right-left heavy?
+		p = rotateRightLeft(p); // fix with double rotation
+		}
+		TODO // update height
+		return p; // return link to updated subtree
+	}
+
+
+```
+
+
+#### Запрос присваивания
+Запрос присваивания выполняется аналогично обычному BST с временной сложностью $\mathcal{O}(\log n)$.
+
+#### Запрос суммы
+Запрос суммы выполняется аналогично обычному BST с временной сложностью $\mathcal{O}(\log n)$.
+
+#### Сложность операций
+
+- **Пространственная сложность**: $\mathcal{O}(n)$
+- **Временная сложность**:  $\mathcal{O}(\log n)$ на каждую из операций
+
 ### 8. B-дерево
 
 #### Свойства
