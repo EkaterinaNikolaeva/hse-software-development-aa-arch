@@ -1,7 +1,6 @@
 #ifndef SEGMENT_TREE_HPP
 #define SEGMENT_TREE_HPP
 
-#include <iostream>
 #include <irsq.hpp>
 #include <vector>
 
