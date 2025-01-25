@@ -60,7 +60,7 @@ struct SegmentTree : IRSQ {
   }
 
  public:
-  explicit SegmentTree(const std::vector<int> input)
+  explicit SegmentTree(const std::vector<int> &input)
       : INPUT_LENGTH_(input.size()) {
     sum_tree_.resize(INPUT_LENGTH_ * 4);
     BuildTree(input, 0, 0, INPUT_LENGTH_);
