@@ -1,6 +1,5 @@
 #include <benchmark/benchmark.h>
 #include <vector>
-#include <string>
 #include <naive.hpp>
 #include <segment_tree.hpp>
 
@@ -31,7 +30,7 @@ namespace rsq {
         }
 
         void runExperiments() const {
-                BENCHMARK_TEMPLATE(benchmark_test, Naive)->RangeMultiplier(step)->Range(startRange, endRange);
+                BENCHMARK_TEMPLATE(benchmark_test, NaiveRSQ)->RangeMultiplier(step)->Range(startRange, endRange);
                 BENCHMARK_TEMPLATE(benchmark_test, SegmentTree)->RangeMultiplier(step)->Range(startRange, endRange);
             benchmark::RunSpecifiedBenchmarks();
         }
