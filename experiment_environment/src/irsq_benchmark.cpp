@@ -15,13 +15,13 @@ namespace rsq {
         ExperimentManager(int start_range, int end_range, int step_size)
                 : startRange(start_range), endRange(end_range), step(step_size) {}
 
-        template <typename RSQType>
-        static void benchmark_test(benchmark::State& state) {
+        template<typename RSQType>
+        static void benchmark_test(benchmark::State &state) {
             size_t size = state.range(0);
             std::vector<int> data(size, 1);
 
             RSQType rsq(data);
-            for (auto _ : state) {
+            for (auto _: state) {
                 for (size_t i = 0; i < size; ++i) {
                     rsq.Update(i, i);
                     rsq.Query(0, size - 1);
@@ -30,8 +30,8 @@ namespace rsq {
         }
 
         void runExperiments() const {
-                BENCHMARK_TEMPLATE(benchmark_test, NaiveRSQ)->RangeMultiplier(step)->Range(startRange, endRange);
-                BENCHMARK_TEMPLATE(benchmark_test, SegmentTree)->RangeMultiplier(step)->Range(startRange, endRange);
+            BENCHMARK_TEMPLATE(benchmark_test, NaiveRSQ)->RangeMultiplier(step)->Range(startRange, endRange);
+            BENCHMARK_TEMPLATE(benchmark_test, SegmentTree)->RangeMultiplier(step)->Range(startRange, endRange);
             benchmark::RunSpecifiedBenchmarks();
         }
     };
