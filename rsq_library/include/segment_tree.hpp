@@ -8,7 +8,6 @@ namespace rsq {
 
 struct SegmentTree : IRSQ {
  private:
-  const std::size_t INPUT_LENGTH_;
   std::vector<int> sum_tree_;
 
   void UpdateNodeValue(std::size_t node) {
@@ -59,24 +58,23 @@ struct SegmentTree : IRSQ {
   }
 
  public:
-  explicit SegmentTree(const std::vector<int> &input)
-      : INPUT_LENGTH_(input.size()) {
-    sum_tree_.resize(INPUT_LENGTH_ * 4);
-    BuildTree(input, 0, 0, INPUT_LENGTH_);
+  explicit SegmentTree(const std::vector<int> &input) : IRSQ(input) {
+    sum_tree_.resize(INPUT_ARRAY_LENGTH_ * 4);
+    BuildTree(input, 0, 0, INPUT_ARRAY_LENGTH_);
   }
 
   void Update(std::size_t index, int new_value) final {
-    if (index >= INPUT_LENGTH_) {
+    if (index >= INPUT_ARRAY_LENGTH_) {
       throw RSQOutOfBoundsError();
     }
-    UpdateInternal(0, 0, INPUT_LENGTH_, index, new_value);
+    UpdateInternal(0, 0, INPUT_ARRAY_LENGTH_, index, new_value);
   }
 
   int Query(std::size_t left, std::size_t right) final {
-    if (left > right || left >= INPUT_LENGTH_ || right >= INPUT_LENGTH_) {
+    if (left > right || left >= INPUT_ARRAY_LENGTH_ || right >= INPUT_ARRAY_LENGTH_) {
       throw RSQOutOfBoundsError();
     }
-    return QueryInternal(0, 0, INPUT_LENGTH_, left, right + 1);
+    return QueryInternal(0, 0, INPUT_ARRAY_LENGTH_, left, right + 1);
   }
 };
 
