@@ -14,16 +14,12 @@ class NaiveRSQ : public IRSQ {
   explicit NaiveRSQ(const std::vector<int>& input) : IRSQ(input), data(input) {}
 
   void Update(std::size_t index, int value) override {
-    if (index >= data.size()) {
-      throw RSQOutOfBoundsError();
-    }
+    CheckIndex(index);
     data[index] = value;
   }
 
   int Query(std::size_t left, std::size_t right) override {
-    if (left > right || left >= data.size() || right >= data.size()) {
-      throw RSQOutOfBoundsError();
-    }
+    CheckRange(left, right);
     int sum = 0;
     for (std::size_t i = left; i <= right; ++i) {
       sum += data[i];

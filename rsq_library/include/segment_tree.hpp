@@ -64,16 +64,12 @@ struct SegmentTree : IRSQ {
   }
 
   void Update(std::size_t index, int new_value) final {
-    if (index >= INPUT_ARRAY_LENGTH_) {
-      throw RSQOutOfBoundsError();
-    }
+    CheckIndex(index);
     UpdateInternal(0, 0, INPUT_ARRAY_LENGTH_, index, new_value);
   }
 
   int Query(std::size_t left, std::size_t right) final {
-    if (left > right || left >= INPUT_ARRAY_LENGTH_ || right >= INPUT_ARRAY_LENGTH_) {
-      throw RSQOutOfBoundsError();
-    }
+    CheckRange(left, right);
     return QueryInternal(0, 0, INPUT_ARRAY_LENGTH_, left, right + 1);
   }
 };
