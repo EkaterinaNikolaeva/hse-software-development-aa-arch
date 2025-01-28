@@ -19,6 +19,6 @@ static void benchmark_test(benchmark::State &state) {
   }
 }
 BENCHMARK_TEMPLATE(benchmark_test, rsq::SegmentTree);
-BENCHMARK_TEMPLATE(benchmark_test, rsq::Naive);
+BENCHMARK_TEMPLATE(benchmark_test, rsq::NaiveRSQ);
 
 BENCHMARK_MAIN();

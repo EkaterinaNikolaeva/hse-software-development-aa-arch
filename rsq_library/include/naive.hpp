@@ -6,12 +6,12 @@
 
 namespace rsq {
 
-class Naive : public IRSQ {
+class NaiveRSQ : public IRSQ {
  private:
   std::vector<int> data;
 
  public:
-  explicit Naive(const std::vector<int>& input) : data(input) {}
+  explicit NaiveRSQ(const std::vector<int>& input) : IRSQ(input), data(input) {}
 
   void Update(std::size_t index, int value) override {
     if (index >= data.size()) {

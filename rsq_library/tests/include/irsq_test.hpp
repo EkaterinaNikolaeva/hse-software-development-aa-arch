@@ -1,10 +1,13 @@
+#ifndef IRSQ_TEST_HPP
+#define IRSQ_TEST_HPP
+
 #include <gtest/gtest.h>
 
 #include <irsq.hpp>
 #include <naive.hpp>
 #include <segment_tree.hpp>
 
-namespace rsq {
+namespace rsq::tests {
 
 template <typename T>
 class IRSQTest : public ::testing::Test {
@@ -44,16 +47,5 @@ class IRSQTest : public ::testing::Test {
   }
 };
 
-using SegmentTreeTest = IRSQTest<SegmentTree>;
-using NaiveTest = IRSQTest<Naive>;
-
-TEST_F(SegmentTreeTest, BasicOperations) { SimpleTestIRSQ(); }
-
-TEST_F(NaiveTest, BasicOperations) { SimpleTestIRSQ(); }
-
-}  // namespace rsq
-
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
+}  // namespace rsq::tests
+#endif  // IRSQ_TEST_HPP
