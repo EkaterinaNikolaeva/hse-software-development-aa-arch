@@ -15,3 +15,45 @@
 1. Посчитать сумму на отрезке [l, r] массива
 
 2. Присвоить $i$-ому элементу массива значение $k$
+
+## Установка
+
+1. Склонируйте репозиторий
+
+```
+git clone https://github.com/EkaterinaNikolaeva/hse-software-development-aa-arch.git
+```
+
+2. Установите зависимости
+
+```
+sudo apt-get install -y cmake g++ lcov libgtest-dev libbenchmark-dev
+```
+
+## Использование
+
+1. Библиотека является header-only, поэтому для использования достаточно просто импортировать необходимые файлы
+2. Для запусков тестов
+
+* Найстройте CMake:
+```
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="--coverage" -DCMAKE_EXE_LINKER_FLAGS="--coverage"
+```
+* Соберите
+```
+cmake --build build
+```
+
+* Чтобы запустить тесты производительности, выполните:
+```
+./build/my_benchmark
+```
+* Чтобы запустить юнит-тесты
+```
+ctest --test-dir build/rsq_library/tests/
+```
+* Чтобы посчитать покрытие кода
+
+```
+lcov --capture --directory build --output-file coverage.info && lcov --remove coverage.info '/usr/*' --output-file coverage.info && lcov --list coverage.info
+```

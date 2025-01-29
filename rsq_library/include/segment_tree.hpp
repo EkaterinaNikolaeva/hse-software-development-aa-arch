@@ -60,7 +60,9 @@ struct SegmentTree : IRSQ {
  public:
   explicit SegmentTree(const std::vector<int> &input) : IRSQ(input) {
     sum_tree_.resize(INPUT_ARRAY_LENGTH_ * 4);
-    BuildTree(input, 0, 0, INPUT_ARRAY_LENGTH_);
+    if (INPUT_ARRAY_LENGTH_ > 0) {
+      BuildTree(input, 0, 0, INPUT_ARRAY_LENGTH_);
+    }
   }
 
   void Update(std::size_t index, int new_value) final {
