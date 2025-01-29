@@ -44,15 +44,15 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="--coverage" -DCM
 cmake --build build
 ```
 
-* Чтобы запустить тесты производительности, выполните:
+* Чтобы запустить тесты производительности:
 ```
 ./build/my_benchmark
 ```
-* Чтобы запустить юнит-тесты
+* Чтобы запустить юнит-тесты:
 ```
 ctest --test-dir build/rsq_library/tests/
 ```
-* Чтобы посчитать покрытие кода
+* Чтобы посчитать покрытие кода:
 
 ```
 lcov --capture --directory build --output-file coverage.info && lcov --remove coverage.info '/usr/*' --output-file coverage.info && lcov --list coverage.info
