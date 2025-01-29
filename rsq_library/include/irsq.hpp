@@ -7,7 +7,7 @@
 
 namespace rsq {
 
-struct RSQOutOfBoundsError : std::runtime_error {
+struct RSQOutOfBoundsError : public std::runtime_error {
   RSQOutOfBoundsError() : std::runtime_error("Incorrect query bounds") {}
 };
 
