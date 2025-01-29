@@ -23,7 +23,9 @@ jobs:
         fallback-style: "Google"
 
     - name: Install dependencies
-      run: sudo apt-get install -y cmake g++ lcov libgtest-dev libbenchmark-dev
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ lcov libgtest-dev libbenchmark-dev nlohmann-json3-dev
 
     - name: Create build directory
       run: mkdir build
@@ -35,10 +37,10 @@ jobs:
       run: cmake --build build
 
     - name: Run benchmark
-      run: ./build/my_benchmark 
+      run: ./build/my_benchmark /experiment_environment/src/config.json
 
     - name: Run tests
-      run: ctest --test-dir build/rsq_library/tests/
+      run: ctest --test-dir build/rsq_library/tests/ -V
 
     - name: Generate coverage report
       run: |

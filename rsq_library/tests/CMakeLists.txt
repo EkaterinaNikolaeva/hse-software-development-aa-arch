@@ -12,5 +12,4 @@ target_link_libraries(runTests ${GTEST_LIBRARIES} pthread)
 
 enable_testing()
 
-add_test(NAME IRSQTest COMMAND runTests)
-add_test(NAME RandomIRSQTest COMMAND runTests)
+gtest_discover_tests(runTests)

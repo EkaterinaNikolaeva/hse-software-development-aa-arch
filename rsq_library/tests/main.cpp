@@ -12,10 +12,10 @@ TEST_F(SegmentTreeTest, BasicOperationsSegmentTree) { SimpleTestIRSQ(); }
 TEST_F(NaiveTest, BasicOperationsNaive) { SimpleTestIRSQ(); }
 
 TEST_F(SegmentTreeRandomTest, RandomOperationsSegmentTree) {
-  RandomActionsTest();
+    RandomActionsTest();
 }
 
 int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
