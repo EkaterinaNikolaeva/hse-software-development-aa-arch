@@ -6,7 +6,7 @@
 
 namespace rsq {
 
-struct SegmentTree : IRSQ {
+class SegmentTree : IRSQ {
  private:
   std::vector<int> sum_tree_;
 

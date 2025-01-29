@@ -1,4 +1,5 @@
 # hse-software-development-aa-arch
+
 ![Build Status](https://github.com/EkaterinaNikolaeva/hse-software-development-aa-arch/actions/workflows/ci.yml/badge.svg)
 [![codecov](https://codecov.io/gh/EkaterinaNikolaeva/hse-software-development-aa-arch/graph/badge.svg?token=3TD7AGNN9H)](https://codecov.io/gh/EkaterinaNikolaeva/hse-software-development-aa-arch)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/c6738c14413447e78cebd7ce79f8e130)](https://app.codacy.com/gh/EkaterinaNikolaeva/hse-software-development-aa-arch/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
@@ -6,7 +7,8 @@
 
 ## Описание репозитория
 
-Данный репозиторий содержит библиотеку и экспериментальную среду для решения задачи вычисления суммы на отрезке массива с возможностью обновления отдельных элементов. Язык реализации - C++.
+Данный репозиторий содержит библиотеку и экспериментальную среду для решения задачи вычисления суммы на отрезке массива
+с возможностью обновления отдельных элементов. Язык реализации - C++.
 
 ## Постановка задачи RSQ
 
@@ -27,7 +29,8 @@ git clone https://github.com/EkaterinaNikolaeva/hse-software-development-aa-arch
 2. Установите зависимости
 
 ```
-sudo apt-get install -y cmake g++ lcov libgtest-dev libbenchmark-dev
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ lcov libgtest-dev libbenchmark-dev nlohmann-json3-dev```
 ```
 
 ## Использование
@@ -36,22 +39,38 @@ sudo apt-get install -y cmake g++ lcov libgtest-dev libbenchmark-dev
 2. Для запусков тестов
 
 * Найстройте CMake:
+
 ```
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="--coverage" -DCMAKE_EXE_LINKER_FLAGS="--coverage"
 ```
+
 * Соберите
+
 ```
 cmake --build build
 ```
 
 * Чтобы запустить тесты производительности:
+
 ```
-./build/my_benchmark
+./build/my_benchmark <путь-к-конфигу-от-корня-репозитрия>
 ```
+
+Пример файла `config.json`. Содержит список размеров входных данных
+для случайных тестов.
+
+```
+{
+  "random_sizes": [10, 100, 10000]
+}
+```
+
 * Чтобы запустить юнит-тесты:
+
 ```
-ctest --test-dir build/rsq_library/tests/
+ctest --test-dir build/rsq_library/tests/ -V
 ```
+
 * Чтобы посчитать покрытие кода:
 
 ```
