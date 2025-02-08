@@ -3,10 +3,6 @@
 
 #include <gtest/gtest.h>
 
-#include <irsq.hpp>
-#include <naive.hpp>
-#include <segment_tree.hpp>
-
 namespace rsq::tests {
 
 template <typename T>
