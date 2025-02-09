@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 #include <benchmark/benchmark.h>
 #include <naive.hpp>
 #include <segment_tree.hpp>
 #include <vector>
+=======
+>>>>>>> 56b3a1b (add naive benchmark, refactor benchmark code)
 #include "config_loader.hpp"
 #include "random_data_generator.hpp"
+#include <benchmark/benchmark.h>
+#include <naive.hpp>
+#include <segment_tree.hpp>
+#include <experiment_manager_google.hpp>
+#include <experiment_manager_naive.hpp>
+#include <functional>
+#include <memory>
 
 namespace rsq {
 
