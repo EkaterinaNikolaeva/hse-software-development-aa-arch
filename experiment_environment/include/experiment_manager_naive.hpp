@@ -30,7 +30,8 @@ class ExperimentManagerNaive : public ExperimentManagerBase {
   void RunExperiments() override {
     for (std::size_t size : random_sizes_) {
       RunExperiment<SegmentTree>("SegmentTree", size);
-      RunExperiment<NaiveRSQ>("Naive", size);
+      RunExperiment<NaiveRSQ>("NaiveRSQ", size);
+      RunExperiment<SqrtRSQ>("SqrtRSQ", size);
     }
   }
 };
