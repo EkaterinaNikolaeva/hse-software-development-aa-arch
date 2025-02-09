@@ -7,6 +7,7 @@
 #include <segment_tree.hpp>
 
 #include "experiment_manager_base.hpp"
+#include "sqrt_rsq.hpp"
 
 namespace rsq::benchmark {
 
@@ -46,6 +47,7 @@ class ExperimentManagerGoogle : public ExperimentManagerBase {
     for (std::size_t size : random_sizes_) {
       RegisterType<NaiveRSQ>(size);
       RegisterType<SegmentTree>(size);
+      RegisterType<SqrtRSQ>(size);
     }
 
     ::benchmark::RunSpecifiedBenchmarks();
