@@ -2,11 +2,13 @@
 #define EXPERIMENT_MANAGER_GOOGLE_HPP
 
 #include <benchmark/benchmark.h>
+#include <down_segment_tree.hpp>
+#include <fenwick_tree.hpp>
 #include <functional>
 #include <naive.hpp>
 #include <segment_tree.hpp>
+#include <sqrt_rsq.hpp>
 #include "experiment_manager_base.hpp"
-#include "sqrt_rsq.hpp"
 
 namespace rsq::benchmark {
 
@@ -76,9 +78,11 @@ public:
 
     void RunExperiments() override {
         for (std::size_t size : random_sizes_) {
-            RegisterType<NaiveRSQ>(size, "Naive");
+            // RegisterType<NaiveRSQ>(size, "Naive");
             RegisterType<SegmentTree>(size, "SegmentTree");
             RegisterType<SqrtRSQ>(size, "Sqrt");
+            RegisterType<FenwickTree>(size, "Fenwick");
+            RegisterType<DownSegmentTree>(size, "DownSegmentTree");
         }
 
         ::benchmark::RunSpecifiedBenchmarks();
