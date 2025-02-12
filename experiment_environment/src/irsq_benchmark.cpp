@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 #include <benchmark/benchmark.h>
 #include <naive.hpp>
-#include <segment_tree.hpp>
 #include <vector>
-=======
->>>>>>> 56b3a1b (add naive benchmark, refactor benchmark code)
 #include "config_loader.hpp"
 #include "random_data_generator.hpp"
 #include <benchmark/benchmark.h>
@@ -192,8 +188,13 @@ int main(int argc, char *argv[]) {
         std::string config_filename = argv[1];
         std::vector<int> test_sizes = ConfigLoader::loadConfig(config_filename);
 
-        rsq::ExperimentManager experimentManager(test_sizes);
-        experimentManager.runExperiments();
+        rsq::benchmark::ExperimentManagerGoogle experimentManagerGoogle(
+            test_sizes
+        );
+        experimentManagerGoogle.RunExperiments();
+        rsq::benchmark::ExperimentManagerNaive experimentManagerNaive(test_sizes
+        );
+        experimentManagerNaive.RunExperiments();
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
         return 1;
