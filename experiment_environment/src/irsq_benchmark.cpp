@@ -9,8 +9,6 @@
 #include <experiment_manager_naive.hpp>
 #include <functional>
 #include <memory>
-#include <naive.hpp>
-#include <segment_tree.hpp>
 #include "config_loader.hpp"
 #include "random_data_generator.hpp"
 
