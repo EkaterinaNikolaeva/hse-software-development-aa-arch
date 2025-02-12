@@ -3,11 +3,12 @@
 ## 1. Структура проекта
 
 ```cpp
-/RSQ_Library              # Модуль с алгоритмами RSQ (header-only)
+/rsq_library              # Модуль с алгоритмами RSQ (header-only)
   /include                # Заголовочные файлы с реализациями алгоритмов
   /tests                  # Unit-тесты для проверки алгоритмов
+    /include              # Header-файлы для unit-тестов
 
-/Experiment_Environment   # Модуль экспериментальной среды
+/experiment_environment   # Модуль экспериментальной среды
   /include                # Заголовочные файлы для экспериментальной среды
   /src                    # Исходный код для экспериментальной среды
   /data                   # Пример входных данных для тестирования
@@ -59,9 +60,9 @@
 * Базовый интерфейс
 
 ```cpp
-class IRSQ {
-  virtual int Query(int left, int right) = 0;
-  virtual void Update(int index, int value) = 0;
+struct IRSQ {
+  virtual int Query(std::size_t left, std::size_t right) = 0;
+  virtual void Update(std::size_t index, int new_value) = 0;
   virtual ~IRSQ() = default;
 };
 ```
