@@ -1,6 +1,8 @@
 #ifndef EXPERIMENT_MANAGER_NAIVE_HPP
 #define EXPERIMENT_MANAGER_NAIVE_HPP
 
+#include <down_segment_tree.hpp>
+#include <fenwick_tree.hpp>
 #include <iostream>
 #include <naive.hpp>
 #include <segment_tree.hpp>
@@ -42,8 +44,10 @@ public:
     void RunExperiments() override {
         for (std::size_t size : random_sizes_) {
             RunExperiment<SegmentTree>("SegmentTree", size);
-            RunExperiment<NaiveRSQ>("NaiveRSQ", size);
+            // RunExperiment<NaiveRSQ>("NaiveRSQ", size);
             RunExperiment<SqrtRSQ>("SqrtRSQ", size);
+            RunExperiment<FenwickTree>("Fenwick", size);
+            RunExperiment<DownSegmentTree>("DownSegmentTree", size);
         }
     }
 };
