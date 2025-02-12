@@ -1,6 +1,7 @@
 #ifndef RSQ_RANDOM_DATA_GENERATOR_HPP
 #define RSQ_RANDOM_DATA_GENERATOR_HPP
 
+#include <ctime>
 #include <random>
 #include <vector>
 
