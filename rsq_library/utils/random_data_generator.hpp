@@ -18,7 +18,7 @@ class RandomDataGenerator {
   explicit RandomDataGenerator(const size_t vector_size = 100,
                                const int min_element = -100,
                                const int max_element = 100,
-                               const double action_probability = 0.3)
+                               const double action_probability = 0.5)
       : rng_(std::time(nullptr)),
         min_max_dis_(min_element, max_element),
         zero_one_dis_(0.0, 1.0),

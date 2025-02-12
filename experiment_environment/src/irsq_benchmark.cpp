@@ -19,11 +19,10 @@ class ExperimentManager {
 
   template <typename RSQType>
   static void benchmark_naive_test(benchmark::State &state) {
-    size_t size = state.range(0);
-    std::vector<int> data(size, 1);
-
-    RSQType rsq(data);
+    const size_t size = state.range(0);
     for (auto _ : state) {
+      std::vector<int> data(size, 1);
+      RSQType rsq(data);
       for (size_t i = 0; i < size; ++i) {
         rsq.Update(i, i);
         rsq.Query(0, size - 1);
@@ -33,18 +32,43 @@ class ExperimentManager {
 
   template <typename RSQType>
   static void benchmark_random_test(benchmark::State &state) {
-    size_t size = state.range(0);
-    rsq::utils::RandomDataGenerator generator;
-    std::vector<int> data = generator.GenerateRandomVector(size);
+    const size_t size = state.range(0);
+    rsq::utils::RandomDataGenerator generator(size);
 
-    RSQType rsq(data);
     for (auto _ : state) {
+      std::vector<int> data = generator.GenerateRandomVector();
+      RSQType rsq(data);
       for (size_t i = 0; i < size; ++i) {
-        rsq.Update(generator.GetRandomIndex(size), generator.GetRandomInt());
-        std::size_t left = generator.GetRandomIndex(size);
-        std::size_t right = generator.GetRandomIndex(size);
+        rsq.Update(generator.GetRandomIndex(), generator.GetRandomInt());
+        std::size_t left = generator.GetRandomIndex();
+        std::size_t right = generator.GetRandomIndex();
         if (left > right) std::swap(left, right);
         rsq.Query(left, right);
+      }
+    }
+  }
+
+  template <typename RSQType>
+  static void benchmark_random_test_with_parameters(int min_element,
+                                                    int max_element,
+                                                    double update_probability,
+                                                    benchmark::State &state) {
+    const size_t size = state.range(0);
+
+    rsq::utils::RandomDataGenerator generator(size, min_element, max_element,
+                                              update_probability);
+    for (auto _ : state) {
+      std::vector<int> data = generator.GenerateRandomVector();
+      RSQType rsq(data);
+      for (size_t i = 0; i < 2 * size; ++i) {
+        if (generator.CheckChangeAction()) {
+          rsq.Update(generator.GetRandomIndex(), generator.GetRandomInt());
+        } else {
+          std::size_t left = generator.GetRandomIndex();
+          std::size_t right = generator.GetRandomIndex();
+          if (left > right) std::swap(left, right);
+          rsq.Query(left, right);
+        }
       }
     }
   }
@@ -63,6 +87,26 @@ class ExperimentManager {
           ->Arg(size);
       benchmark::RegisterBenchmark("BM_Random_RSQSegmentTree",
                                    benchmark_random_test<SegmentTree>)
+          ->Arg(size);
+      benchmark::RegisterBenchmark(
+          "BM_Random_Update_RSQNaive",
+          std::bind(benchmark_random_test_with_parameters<NaiveRSQ>, -100, 100,
+                    0.99, std::placeholders::_1))
+          ->Arg(size);
+      benchmark::RegisterBenchmark(
+          "BM_Random_Query_RSQNaive",
+          std::bind(benchmark_random_test_with_parameters<NaiveRSQ>, -100, 100,
+                    0.01, std::placeholders::_1))
+          ->Arg(size);
+      benchmark::RegisterBenchmark(
+          "BM_Random_Update_RSQSegmentTree",
+          std::bind(benchmark_random_test_with_parameters<SegmentTree>, -100,
+                    100, 0.99, std::placeholders::_1))
+          ->Arg(size);
+      benchmark::RegisterBenchmark(
+          "BM_Random_Query_RSQSegmentTree",
+          std::bind(benchmark_random_test_with_parameters<SegmentTree>, -100,
+                    100, 0.01, std::placeholders::_1))
           ->Arg(size);
     }
 
