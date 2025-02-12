@@ -1,7 +1,6 @@
 #ifndef RSQ_RANDOM_DATA_GENERATOR_HPP
 #define RSQ_RANDOM_DATA_GENERATOR_HPP
 
-#include <ctime>
 #include <random>
 #include <vector>
 
@@ -9,27 +8,45 @@ namespace rsq::utils {
 
 class RandomDataGenerator {
  private:
-  std::mt19937 rng;
-  const int ABS_MAX_ELEMENT;
+  std::mt19937 rng_;
+  std::uniform_int_distribution<int> min_max_dis_;
+  std::uniform_real_distribution<double> zero_one_dis_;
+  std::uniform_int_distribution<std::size_t> index_dis_;
+  std::bernoulli_distribution action_dis_;
 
  public:
-  explicit RandomDataGenerator(int abs_max_element = 100)
-      : rng(std::time(nullptr)), ABS_MAX_ELEMENT(abs_max_element) {}
-
-  int GetRandomInt() { return rng() % (2 * ABS_MAX_ELEMENT) - ABS_MAX_ELEMENT; }
-
-  std::size_t GetRandomIndex(std::size_t vector_size) {
-    return static_cast<std::size_t>(rng() % vector_size);
+  explicit RandomDataGenerator(const size_t vector_size = 100,
+                               const int min_element = -100,
+                               const int max_element = 100,
+                               const double action_probability = 0.3)
+      : rng_(std::time(nullptr)),
+        min_max_dis_(min_element, max_element),
+        zero_one_dis_(0.0, 1.0),
+        index_dis_(0, vector_size - 1),
+        action_dis_(action_probability) {
+    if (vector_size == 0) {
+      throw std::invalid_argument("Vector size must be greater than zero.");
+    }
+    if (min_element > max_element) {
+      throw std::invalid_argument(
+          "Minimum element cannot be greater than maximum element.");
+    }
+    if (action_probability < 0.0 || action_probability > 1.0) {
+      throw std::invalid_argument(
+          "Action probability must be between zero and one.");
+    }
   }
 
-  bool CheckChangeAction(double probability = 0.3) {
-    return rng() % ABS_MAX_ELEMENT < probability * ABS_MAX_ELEMENT;
-  }
+  int GetRandomInt() { return min_max_dis_(rng_); }
 
-  std::vector<int> GenerateRandomVector(std::size_t vector_size) {
-    std::vector<int> result(vector_size);
-    for (std::size_t i = 0; i < vector_size; ++i) {
-      result[i] = GetRandomInt();
+  std::size_t GetRandomIndex() { return index_dis_(rng_); }
+
+  bool CheckChangeAction() { return action_dis_(rng_); }
+
+  std::vector<int> GenerateRandomVector() {
+    std ::vector<int> result(index_dis_.max() + 1);
+    for (auto& value : result) {
+      value = GetRandomInt();
     }
     return result;
   }
@@ -37,4 +54,4 @@ class RandomDataGenerator {
 
 }  // namespace rsq::utils
 
-#endif  // RSQ_RANDOM_DATA_GENERATOR_HPP
+#endif
