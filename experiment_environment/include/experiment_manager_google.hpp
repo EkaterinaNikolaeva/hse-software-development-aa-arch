@@ -2,6 +2,7 @@
 #define EXPERIMENT_MANAGER_GOOGLE_HPP
 
 #include <benchmark/benchmark.h>
+#include <functional>
 #include <naive.hpp>
 #include <segment_tree.hpp>
 #include "experiment_manager_base.hpp"
