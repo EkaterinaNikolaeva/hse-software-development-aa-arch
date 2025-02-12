@@ -61,6 +61,10 @@ public:
         }
         return result;
     }
+<<<<<<< HEAD
+=======
+  }
+>>>>>>> d947411 (update codestyle & add Fenwick tree)
 };
 
 }  // namespace rsq::utils

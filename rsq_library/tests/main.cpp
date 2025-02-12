@@ -13,6 +13,8 @@ using SegmentTreeRandomTest = rsq::tests::RandomIRSQTest<rsq::SegmentTree>;
 using NaiveTest = rsq::tests::IRSQTest<rsq::NaiveRSQ>;
 using SqrtRSQTest = rsq::tests::IRSQTest<rsq::SqrtRSQ>;
 using SqrtRSQRandmomTest = rsq::tests::RandomIRSQTest<rsq::SqrtRSQ>;
+using FenwickTest = rsq::tests::IRSQTest<rsq::SqrtRSQ>;
+using FenwickRandmomTest = rsq::tests::RandomIRSQTest<rsq::SqrtRSQ>;
 
 TEST_F(SegmentTreeTest, BasicOperationsSegmentTree) {
     SimpleTestIRSQ();
@@ -39,9 +41,29 @@ TEST_F(SegmentTreeRandomTest, RandomOperationsSegmentTree) {
     RandomActionsTest(0.5, 10000000, 100);  // small vector
 }
 
-TEST_F(SqrtRSQTest, BasicOperationsNaive) { SimpleTestIRSQ(); }
+TEST_F(SegmentTreeTest, BasicOperations) {
+    SimpleTestIRSQ();
+}
 
-TEST_F(SqrtRSQRandmomTest, RandomOperationsSegmentTree) { RandomActionsTest(); }
+TEST_F(SegmentTreeRandomTest, RandomOperations) {
+    RandomActionsTest();
+}
+
+TEST_F(SqrtRSQTest, BasicOperations) {
+    SimpleTestIRSQ();
+}
+
+TEST_F(SqrtRSQRandmomTest, RandomOperations) {
+    RandomActionsTest();
+}
+
+TEST_F(FenwickTest, BasicOperations) {
+    SimpleTestIRSQ();
+}
+
+TEST_F(FenwickRandmomTest, RandomOperations) {
+    RandomActionsTest();
+}
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
