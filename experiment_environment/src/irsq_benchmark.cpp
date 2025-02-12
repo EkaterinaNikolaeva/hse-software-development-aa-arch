@@ -1,15 +1,20 @@
+<<<<<<< HEAD
 #include <benchmark/benchmark.h>
 #include <naive.hpp>
 #include <vector>
 #include "config_loader.hpp"
 #include "random_data_generator.hpp"
+=======
+>>>>>>> 69b3ca6 (after rebase with new tests)
 #include <benchmark/benchmark.h>
-#include <naive.hpp>
-#include <segment_tree.hpp>
 #include <experiment_manager_google.hpp>
 #include <experiment_manager_naive.hpp>
 #include <functional>
 #include <memory>
+#include <naive.hpp>
+#include <segment_tree.hpp>
+#include "config_loader.hpp"
+#include "random_data_generator.hpp"
 
 namespace rsq {
 
@@ -23,7 +28,7 @@ public:
     }
 
     template <typename RSQType>
-    static void benchmark_naive_test(benchmark::State &state) {
+    static void benchmark_naive_test(::benchmark::State &state) {
         const size_t size = state.range(0);
         for (auto _ : state) {
             std::vector<int> data(size, 1);
@@ -83,7 +88,7 @@ public:
         int min_element,
         int max_element,
         double update_probability,
-        benchmark::State &state
+        ::benchmark::State &state
     ) {
         const size_t size = state.range(0);
 
@@ -111,20 +116,20 @@ public:
 
     void runExperiments() const {
         for (int size : random_sizes) {
-            benchmark::
+            ::benchmark::
                 RegisterBenchmark("BM_Naive_RSQNaive", benchmark_naive_test<NaiveRSQ>)
                     ->Arg(size);
-            benchmark::
+            ::benchmark::
                 RegisterBenchmark("BM_Naive_RSQSegmentTree", benchmark_naive_test<SegmentTree>)
                     ->Arg(size);
 
-            benchmark::
+            ::benchmark::
                 RegisterBenchmark("BM_Random_RSQNaive", benchmark_random_test<NaiveRSQ>)
                     ->Arg(size);
-            benchmark::
+            ::benchmark::
                 RegisterBenchmark("BM_Random_RSQSegmentTree", benchmark_random_test<SegmentTree>)
                     ->Arg(size);
-            benchmark::RegisterBenchmark(
+            ::benchmark::RegisterBenchmark(
                 "BM_Random_Update_RSQNaive",
                 std::bind(
                     benchmark_random_test_with_parameters<NaiveRSQ>, -100, 100,
@@ -132,7 +137,7 @@ public:
                 )
             )
                 ->Arg(size);
-            benchmark::RegisterBenchmark(
+            ::benchmark::RegisterBenchmark(
                 "BM_Random_Query_RSQNaive",
                 std::bind(
                     benchmark_random_test_with_parameters<NaiveRSQ>, -100, 100,
@@ -140,7 +145,7 @@ public:
                 )
             )
                 ->Arg(size);
-            benchmark::RegisterBenchmark(
+            ::benchmark::RegisterBenchmark(
                 "BM_Random_Update_RSQSegmentTree",
                 std::bind(
                     benchmark_random_test_with_parameters<SegmentTree>, -100,
@@ -148,7 +153,7 @@ public:
                 )
             )
                 ->Arg(size);
-            benchmark::RegisterBenchmark(
+            ::benchmark::RegisterBenchmark(
                 "BM_Random_Query_RSQSegmentTree",
                 std::bind(
                     benchmark_random_test_with_parameters<SegmentTree>, -100,
@@ -158,7 +163,7 @@ public:
                 ->Arg(size);
         }
 
-        benchmark::RunSpecifiedBenchmarks();
+        ::benchmark::RunSpecifiedBenchmarks();
     }
 };
 
