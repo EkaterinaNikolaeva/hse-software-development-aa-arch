@@ -35,6 +35,8 @@ class IRSQ {
   virtual int Query(std::size_t left, std::size_t right) = 0;
   virtual void Update(std::size_t index, int value) = 0;
   virtual ~IRSQ() = default;
+
+  size_t size() { return INPUT_ARRAY_LENGTH_; }
 };
 
 }  // namespace rsq
