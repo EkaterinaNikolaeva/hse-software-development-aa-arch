@@ -5,35 +5,35 @@
 #include <naive.hpp>
 #include <segment_tree.hpp>
 #include <vector>
-
 #include "benchmark.hpp"
 #include "experiment_manager_base.hpp"
 
 namespace rsq::benchmark {
 class ExperimentManagerNaive : public ExperimentManagerBase {
- private:
-  template <typename RSQType>
-  void RunExperiment(const std::string &experiment_name,
-                     std::size_t size) const {
-    std::cerr << experiment_name << " Naive " << size << ' '
-              << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
-              << " microseconds\n";
-    std::cerr << experiment_name << " Random " << size << ' '
-              << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
-              << " microseconds\n";
-  }
-
- public:
-  explicit ExperimentManagerNaive(const std::vector<int> &sizes)
-      : ExperimentManagerBase(sizes) {}
-
-  void RunExperiments() override {
-    for (std::size_t size : random_sizes_) {
-      RunExperiment<SegmentTree>("SegmentTree", size);
-      RunExperiment<NaiveRSQ>("NaiveRSQ", size);
-      RunExperiment<SqrtRSQ>("SqrtRSQ", size);
+private:
+    template <typename RSQType>
+    void RunExperiment(const std::string &experiment_name, std::size_t size)
+        const {
+        std::cerr << experiment_name << " Naive " << size << ' '
+                  << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
+                  << " microseconds\n";
+        std::cerr << experiment_name << " Random " << size << ' '
+                  << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
+                  << " microseconds\n";
     }
-  }
+
+public:
+    explicit ExperimentManagerNaive(const std::vector<int> &sizes)
+        : ExperimentManagerBase(sizes) {
+    }
+
+    void RunExperiments() override {
+        for (std::size_t size : random_sizes_) {
+            RunExperiment<SegmentTree>("SegmentTree", size);
+            RunExperiment<NaiveRSQ>("NaiveRSQ", size);
+            RunExperiment<SqrtRSQ>("SqrtRSQ", size);
+        }
+    }
 };
 
 }  // namespace rsq::benchmark

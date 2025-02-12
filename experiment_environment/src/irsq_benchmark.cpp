@@ -118,24 +118,28 @@ class ExperimentManager {
 }  // namespace rsq
 
 int main(int argc, char *argv[]) {
-  try {
-    if (argc < 2) {
-      throw std::runtime_error(
-          "Error: Missing config file argument.\nUsage: ./benchmark "
-          "<config.json>");
+    try {
+        if (argc < 2) {
+            throw std::runtime_error(
+                "Error: Missing config file argument.\nUsage: ./benchmark "
+                "<config.json>"
+            );
+        }
+
+        std::string config_filename = argv[1];
+        std::vector<int> test_sizes = ConfigLoader::loadConfig(config_filename);
+
+        rsq::benchmark::ExperimentManagerGoogle experimentManagerGoogle(
+            test_sizes
+        );
+        experimentManagerGoogle.RunExperiments();
+        rsq::benchmark::ExperimentManagerNaive experimentManagerNaive(test_sizes
+        );
+        experimentManagerNaive.RunExperiments();
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return 1;
     }
 
-    std::string config_filename = argv[1];
-    std::vector<int> test_sizes = ConfigLoader::loadConfig(config_filename);
-
-    rsq::benchmark::ExperimentManagerGoogle experimentManagerGoogle(test_sizes);
-    experimentManagerGoogle.RunExperiments();
-    rsq::benchmark::ExperimentManagerNaive experimentManagerNaive(test_sizes);
-    experimentManagerNaive.RunExperiments();
-  } catch (const std::exception &e) {
-    std::cerr << e.what() << std::endl;
-    return 1;
-  }
-
-  return 0;
+    return 0;
 }

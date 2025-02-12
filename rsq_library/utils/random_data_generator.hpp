@@ -48,7 +48,6 @@ class RandomDataGenerator {
     for (auto& value : result) {
       value = GetRandomInt();
     }
-    return result;
   }
 };
 
