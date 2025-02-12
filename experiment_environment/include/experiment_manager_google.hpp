@@ -15,7 +15,7 @@ namespace rsq::benchmark {
 class ExperimentManagerGoogle : public ExperimentManagerBase {
 private:
     template <typename RSQType>
-    void RegisterType(std::size_t size, const std::string class_name) {
+    void RegisterType(std::size_t size, const std::string &class_name) {
         ::benchmark::
             RegisterBenchmark(("BM_Naive_RSQ" + class_name).c_str(), RunNaiveActions<RSQType>)
                 ->Arg(size);
