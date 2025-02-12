@@ -10,9 +10,7 @@ class DownSegmentTree : public IRSQ {
 private:
     std::vector<int> sum_tree_;
 
-    void BuildTree(
-        const std::vector<int> &input
-    ) {
+    void BuildTree(const std::vector<int> &input) {
         sum_tree_.resize(2 * INPUT_ARRAY_LENGTH_);
         for (std::size_t i = 0; i < INPUT_ARRAY_LENGTH_; ++i) {
             sum_tree_[i + INPUT_ARRAY_LENGTH_] = input[i];
@@ -38,7 +36,8 @@ public:
     int Query(std::size_t left, std::size_t right) final {
         CheckRange(left, right);
         int sum = 0;
-        for (left += INPUT_ARRAY_LENGTH_, right += INPUT_ARRAY_LENGTH_; left <= right; left /= 2, right /= 2) {
+        for (left += INPUT_ARRAY_LENGTH_, right += INPUT_ARRAY_LENGTH_;
+             left <= right; left /= 2, right /= 2) {
             if (left % 2 == 1) {
                 sum += sum_tree_[left++];
             }
