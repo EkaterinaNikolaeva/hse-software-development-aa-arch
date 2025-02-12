@@ -6,6 +6,7 @@
 #include <naive.hpp>
 #include <segment_tree.hpp>
 #include <sqrt_rsq.hpp>
+#include <down_segment_tree.hpp>
 
 using SegmentTreeTest = rsq::tests::IRSQTest<rsq::SegmentTree>;
 using SegmentTreeBetterTest = rsq::tests::IRSQBetterTest<rsq::SegmentTree>;
@@ -15,6 +16,8 @@ using SqrtRSQTest = rsq::tests::IRSQTest<rsq::SqrtRSQ>;
 using SqrtRSQRandmomTest = rsq::tests::RandomIRSQTest<rsq::SqrtRSQ>;
 using FenwickTest = rsq::tests::IRSQTest<rsq::SqrtRSQ>;
 using FenwickRandmomTest = rsq::tests::RandomIRSQTest<rsq::SqrtRSQ>;
+using DownSegmentTreeTest = rsq::tests::IRSQTest<rsq::DownSegmentTree>;
+using DownSegmentTreeRandomTest = rsq::tests::RandomIRSQTest<rsq::DownSegmentTree>;
 
 TEST_F(SegmentTreeTest, BasicOperationsSegmentTree) {
     SimpleTestIRSQ();
@@ -62,6 +65,14 @@ TEST_F(FenwickTest, BasicOperations) {
 }
 
 TEST_F(FenwickRandmomTest, RandomOperations) {
+    RandomActionsTest();
+}
+
+TEST_F(DownSegmentTreeTest, BasicOperations) {
+    SimpleTestIRSQ();
+}
+
+TEST_F(DownSegmentTreeRandomTest, RandomOperations) {
     RandomActionsTest();
 }
 
