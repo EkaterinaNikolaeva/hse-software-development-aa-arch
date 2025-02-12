@@ -14,11 +14,23 @@ private:
     template <typename RSQType>
     void RunExperiment(const std::string &experiment_name, std::size_t size)
         const {
-        std::cerr << experiment_name << " Naive " << size << ' '
+        std::cerr << experiment_name << " Naive/" << size << ' '
                   << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
                   << " microseconds\n";
-        std::cerr << experiment_name << " Random " << size << ' '
+        std::cerr << experiment_name << " Random/" << size << ' '
                   << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
+                  << " microseconds\n";
+        std::cerr << experiment_name << " Random_Update/" << size << ' '
+                  << Benchmark::MeasureTime(
+                         MakeBenchmarkRandomParameterizedTest<RSQType>, size,
+                         -100, 100, 0.99
+                     )
+                  << " microseconds\n";
+        std::cerr << experiment_name << " Random_Query/" << size << ' '
+                  << Benchmark::MeasureTime(
+                         MakeBenchmarkRandomParameterizedTest<RSQType>, size,
+                         -100, 100, 0.01
+                     )
                   << " microseconds\n";
     }
 

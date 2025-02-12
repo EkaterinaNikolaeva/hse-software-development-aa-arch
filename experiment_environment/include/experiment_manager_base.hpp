@@ -37,6 +37,33 @@ protected:
         }
     }
 
+    template <typename RSQType>
+    static void MakeBenchmarkRandomParameterizedTest(
+        std::size_t size,
+        int min_element,
+        int max_element,
+        double update_probability
+    ) {
+        rsq::utils::RandomDataGenerator generator(
+            size, min_element, max_element, update_probability
+        );
+        std::vector<int> data = generator.GenerateRandomVector();
+        RSQType rsq(data);
+        for (size_t i = 0; i < 2 * size; ++i) {
+            if (generator.CheckChangeAction()) {
+                rsq.Update(
+                    generator.GetRandomIndex(), generator.GetRandomInt()
+                );
+            } else {
+                std::size_t left = generator.GetRandomIndex();
+                std::size_t right = generator.GetRandomIndex();
+                if (left > right)
+                    std::swap(left, right);
+                rsq.Query(left, right);
+            }
+        }
+    }
+
 public:
     explicit ExperimentManagerBase(std::vector<int> sizes)
         : random_sizes_(std::move(sizes)) {

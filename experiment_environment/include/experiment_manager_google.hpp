@@ -12,13 +12,29 @@ namespace rsq::benchmark {
 class ExperimentManagerGoogle : public ExperimentManagerBase {
 private:
     template <typename RSQType>
-    void RegisterType(std::size_t size) {
+    void RegisterType(std::size_t size, const std::string class_name) {
         ::benchmark::
-            RegisterBenchmark("BM_Naive_RSQNaive", RunNaiveActions<RSQType>)
+            RegisterBenchmark(("BM_Naive_RSQ" + class_name).c_str(), RunNaiveActions<RSQType>)
                 ->Arg(size);
         ::benchmark::
-            RegisterBenchmark("BM_Random_RSQSegmentTree", RunRandomActions<RSQType>)
+            RegisterBenchmark(("BM_Random_RSQ" + class_name).c_str(), RunRandomActions<RSQType>)
                 ->Arg(size);
+        ::benchmark::RegisterBenchmark(
+            ("BM_Random_Update_RSQ" + class_name).c_str(),
+            std::bind(
+                RunRandomActionsParameterized<RSQType>, -100, 100, 0.99,
+                std::placeholders::_1
+            )
+        )
+            ->Arg(size);
+        ::benchmark::RegisterBenchmark(
+            ("BM_Random_Query_RSQ" + class_name).c_str(),
+            std::bind(
+                RunRandomActionsParameterized<RSQType>, -100, 100, 0.01,
+                std::placeholders::_1
+            )
+        )
+            ->Arg(size);
     }
 
 public:
@@ -42,11 +58,26 @@ public:
         }
     }
 
+    template <typename RSQType>
+    static void RunRandomActionsParameterized(
+        int min_element,
+        int max_element,
+        double update_probability,
+        ::benchmark::State &state
+    ) {
+        size_t size = state.range(0);
+        for (auto _ : state) {
+            MakeBenchmarkRandomParameterizedTest<RSQType>(
+                size, min_element, max_element, update_probability
+            );
+        }
+    }
+
     void RunExperiments() override {
         for (std::size_t size : random_sizes_) {
-            RegisterType<NaiveRSQ>(size);
-            RegisterType<SegmentTree>(size);
-            RegisterType<SqrtRSQ>(size);
+            RegisterType<NaiveRSQ>(size, "Naive");
+            RegisterType<SegmentTree>(size, "SegmentTree");
+            RegisterType<SqrtRSQ>(size, "Sqrt");
         }
 
         ::benchmark::RunSpecifiedBenchmarks();
