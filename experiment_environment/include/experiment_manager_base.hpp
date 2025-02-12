@@ -22,16 +22,14 @@ protected:
 
     template <typename RSQType>
     static void MakeRandomActions(std::size_t size) {
-        rsq::utils::RandomDataGenerator generator;
-        std::vector<int> data = generator.GenerateRandomVector(size);
+        rsq::utils::RandomDataGenerator generator(size);
+        std::vector<int> data = generator.GenerateRandomVector();
 
         RSQType rsq(data);
         for (size_t i = 0; i < size; ++i) {
-            rsq.Update(
-                generator.GetRandomIndex(size), generator.GetRandomInt()
-            );
-            std::size_t left = generator.GetRandomIndex(size);
-            std::size_t right = generator.GetRandomIndex(size);
+            rsq.Update(generator.GetRandomIndex(), generator.GetRandomInt());
+            std::size_t left = generator.GetRandomIndex();
+            std::size_t right = generator.GetRandomIndex();
             if (left > right) {
                 std::swap(left, right);
             }
