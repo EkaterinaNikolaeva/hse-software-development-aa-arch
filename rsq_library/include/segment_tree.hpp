@@ -6,6 +6,7 @@
 
 namespace rsq {
 
+// Класс для решения задачи RSQ с помощью дерева отрезков снизу
 class SegmentTree : public IRSQ {
 private:
     std::vector<int> sum_tree_;

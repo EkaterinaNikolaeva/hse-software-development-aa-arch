@@ -7,11 +7,13 @@
 
 namespace rsq {
 
+// Исключение, выбрасываемое при некорретном запросе суммы/изменения элемента
 struct RSQOutOfBoundsError : public std::runtime_error {
     RSQOutOfBoundsError() : std::runtime_error("Incorrect query bounds") {
     }
 };
 
+// Абстрактный класс для структуры данных, решающий задачу RSQ
 class IRSQ {
 protected:
     const std::size_t INPUT_ARRAY_LENGTH_;

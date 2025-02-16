@@ -6,6 +6,7 @@
 
 namespace rsq {
 
+// Класс наивного решения задачи RSQ
 class NaiveRSQ : public IRSQ {
 private:
     std::vector<int> data;
