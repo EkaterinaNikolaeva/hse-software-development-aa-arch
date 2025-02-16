@@ -20,7 +20,7 @@ jobs:
     - name: Run clang-format style check
       uses: jidicula/clang-format-action@d05cecd4a1a5b7e64c22f5a468456135a43f13f6
       with:
-        fallback-style: "Google"
+        clang-format-version: '15'
 
     - name: Install dependencies
       run: |
