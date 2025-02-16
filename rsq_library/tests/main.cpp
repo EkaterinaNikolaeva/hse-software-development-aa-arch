@@ -43,6 +43,7 @@ TEST_F(SegmentTreeRandomTest, RandomOperationsSegmentTree) {
     RandomActionsTest(0);                   // query only
     RandomActionsTest(1);                   // update only
     RandomActionsTest(0.5, 10000000, 100);  // small vector
+<<<<<<< HEAD
 }
 
 TEST_F(SegmentTreeTest, BasicOperations) {
@@ -75,6 +76,8 @@ TEST_F(DownSegmentTreeTest, BasicOperations) {
 
 TEST_F(DownSegmentTreeRandomTest, RandomOperations) {
     RandomActionsTest();
+=======
+>>>>>>> cdb8881 (update clang format and samall refactoring)
 }
 
 int main(int argc, char **argv) {
