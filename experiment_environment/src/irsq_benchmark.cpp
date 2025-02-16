@@ -167,8 +167,13 @@ int main(int argc, char *argv[]) {
         std::string config_filename = argv[1];
         std::vector<int> test_sizes = ConfigLoader::loadConfig(config_filename);
 
-        rsq::ExperimentManager experimentManager(test_sizes);
-        experimentManager.runExperiments();
+        rsq::benchmark::ExperimentManagerGoogle experimentManagerGoogle(
+            test_sizes
+        );
+        experimentManagerGoogle.RunExperiments();
+        rsq::benchmark::ExperimentManagerNaive experimentManagerNaive(test_sizes
+        );
+        experimentManagerNaive.RunExperiments();
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
         return 1;

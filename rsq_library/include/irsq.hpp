@@ -39,10 +39,14 @@ public:
 
     // Чисто виртуальный метод для получения суммы на отрезке [left, right]
     virtual int Query(std::size_t left, std::size_t right) = 0;
+<<<<<<< HEAD
 
     // Число виртуальный метод для изменения index-ого элемента массива на value
     virtual void Update(std::size_t index, int value) = 0;
     
+=======
+    virtual void Update(std::size_t index, int value) = 0;
+>>>>>>> 98bd148 (add treap implementation)
     virtual ~IRSQ() = default;
 };
 

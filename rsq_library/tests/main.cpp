@@ -7,6 +7,7 @@
 #include <naive.hpp>
 #include <segment_tree.hpp>
 #include <sqrt_rsq.hpp>
+#include <treap.hpp>
 
 using SegmentTreeTest = rsq::tests::IRSQTest<rsq::SegmentTree>;
 using SegmentTreeBetterTest = rsq::tests::IRSQBetterTest<rsq::SegmentTree>;
@@ -19,6 +20,8 @@ using FenwickRandmomTest = rsq::tests::RandomIRSQTest<rsq::SqrtRSQ>;
 using DownSegmentTreeTest = rsq::tests::IRSQTest<rsq::DownSegmentTree>;
 using DownSegmentTreeRandomTest =
     rsq::tests::RandomIRSQTest<rsq::DownSegmentTree>;
+using TreapTest = rsq::tests::IRSQTest<rsq::Treap>;
+using TreapRandomTest = rsq::tests::RandomIRSQTest<rsq::Treap>;
 
 TEST_F(SegmentTreeTest, BasicOperationsSegmentTree) {
     SimpleTestIRSQ();
@@ -43,7 +46,6 @@ TEST_F(SegmentTreeRandomTest, RandomOperationsSegmentTree) {
     RandomActionsTest(0);                   // query only
     RandomActionsTest(1);                   // update only
     RandomActionsTest(0.5, 10000000, 100);  // small vector
-<<<<<<< HEAD
 }
 
 TEST_F(SegmentTreeTest, BasicOperations) {
@@ -76,8 +78,14 @@ TEST_F(DownSegmentTreeTest, BasicOperations) {
 
 TEST_F(DownSegmentTreeRandomTest, RandomOperations) {
     RandomActionsTest();
-=======
->>>>>>> cdb8881 (update clang format and samall refactoring)
+}
+
+TEST_F(TreapTest, BasicOperations) {
+    SimpleTestIRSQ();
+}
+
+TEST_F(TreapRandomTest, RandomOperations) {
+    RandomActionsTest();
 }
 
 int main(int argc, char **argv) {
