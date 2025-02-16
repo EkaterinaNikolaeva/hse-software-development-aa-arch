@@ -1,37 +1,30 @@
 cmake_minimum_required(VERSION 3.10)
 
-# Название проекта
-project(MyProject)
+project(IRSQ_Project)
 
-# Устанавливаем стандарт C++
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Добавляем директории для заголовочных файлов
-include_directories(include)
+include_directories(${CMAKE_SOURCE_DIR}/rsq_library/include)
+include_directories(${CMAKE_SOURCE_DIR}/rsq_library/utils)
 
-# Сканируем все файлы .cpp в директории src
-file(GLOB SRC_FILES "src/*.cpp")
 
-# Добавляем исполняемый файл
-add_executable(main ${SRC_FILES})
+find_package(benchmark REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
-# Добавляем Google Test
-# Предполагается, что Google Test установлен в системе
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
 
-# Сканируем все файлы .cpp в директории tests
-file(GLOB TEST_FILES "tests/*.cpp")
+add_executable(my_benchmark
+        experiment_environment/src/irsq_benchmark.cpp
+)
 
-# Создаем исполняемый файл для тестов
-add_executable(runTests ${TEST_FILES} ${SRC_FILES})
+target_link_libraries(my_benchmark
+        benchmark::benchmark
+        nlohmann_json::nlohmann_json
+)
 
-# Линкуем тесты с Google Test и pthread
-target_link_libraries(runTests ${GTEST_LIBRARIES} pthread)
+target_compile_definitions(my_benchmark PRIVATE PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
 
-# Включаем тестирование
-enable_testing()
+include_directories(${CMAKE_SOURCE_DIR}/experiment_environment/include)
 
-# Добавляем тесты
-add_test(NAME HelloTest COMMAND runTests)
+add_subdirectory(rsq_library/tests)
+
