@@ -17,6 +17,7 @@ struct RSQOutOfBoundsError : public std::runtime_error {
 class IRSQ {
 protected:
     const std::size_t INPUT_ARRAY_LENGTH_;  // Длина входного массива
+    const std::size_t INPUT_ARRAY_LENGTH_;  // Длина входного массива
 
     void CheckIndex(std::size_t index) {
         if (index >= INPUT_ARRAY_LENGTH_) {
@@ -41,8 +42,7 @@ public:
 
     // Число виртуальный метод для изменения index-ого элемента массива на value
     virtual void Update(std::size_t index, int value) = 0;
-
-    // Виртуальный деструктор для корректного наследования
+    
     virtual ~IRSQ() = default;
 };
 
