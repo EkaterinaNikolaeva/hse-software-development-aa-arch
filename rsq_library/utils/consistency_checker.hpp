@@ -16,7 +16,7 @@ private:
 
 public:
     explicit RSQConsistencyChecker(const std::vector<int> &input)
-        : naive_rsq_(input), custom_rsq_(input) {
+        : data_size_(input.size()), naive_rsq_(input), custom_rsq_(input) {
     }
 
     int CheckQuery(std::size_t left, std::size_t right) {
