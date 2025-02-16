@@ -16,7 +16,7 @@ struct RSQOutOfBoundsError : public std::runtime_error {
 // Абстрактный класс для структуры данных, решающий задачу RSQ
 class IRSQ {
 protected:
-    const std::size_t INPUT_ARRAY_LENGTH_;
+    const std::size_t INPUT_ARRAY_LENGTH_;  // Длина входного массива
 
     void CheckIndex(std::size_t index) {
         if (index >= INPUT_ARRAY_LENGTH_) {
@@ -36,13 +36,14 @@ public:
         : INPUT_ARRAY_LENGTH_(input.size()) {
     }
 
+    // Чисто виртуальный метод для получения суммы на отрезке [left, right]
     virtual int Query(std::size_t left, std::size_t right) = 0;
-    virtual void Update(std::size_t index, int value) = 0;
-    virtual ~IRSQ() = default;
 
-    size_t size() {
-        return INPUT_ARRAY_LENGTH_;
-    }
+    // Число виртуальный метод для изменения index-ого элемента массива на value
+    virtual void Update(std::size_t index, int value) = 0;
+
+    // Виртуальный деструктор для корректного наследования
+    virtual ~IRSQ() = default;
 };
 
 }  // namespace rsq

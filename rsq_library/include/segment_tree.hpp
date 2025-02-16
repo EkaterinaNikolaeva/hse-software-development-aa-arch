@@ -11,10 +11,12 @@ class SegmentTree : public IRSQ {
 private:
     std::vector<int> sum_tree_;
 
+    // Метод для пересчета значения в вершине = сумма детей
     void UpdateNodeValue(std::size_t node) {
         sum_tree_[node] = sum_tree_[node * 2 + 1] + sum_tree_[node * 2 + 2];
     }
 
+    // Рекурсивный метод для построения дерева отрезков из конструктора
     void BuildTree(
         const std::vector<int> &input,
         std::size_t node,
@@ -26,8 +28,10 @@ private:
             return;
         }
         std::size_t middle = (left + right) / 2;
-        BuildTree(input, node * 2 + 1, left, middle);
-        BuildTree(input, node * 2 + 2, middle, right);
+        BuildTree(input, node * 2 + 1, left, middle);  // Строим левого ребенка
+        BuildTree(
+            input, node * 2 + 2, middle, right
+        );  // Строим правого ребенка
         UpdateNodeValue(node);
     }
 
@@ -38,12 +42,13 @@ private:
         std::size_t index,
         int new_value
     ) {
-        if (left + 1 == right) {
+        if (left + 1 == right) {  // спустились в вершину
             sum_tree_[node] = new_value;
             return;
         }
         std::size_t middle = (left + right) / 2;
-        if (index < middle) {
+        if (index < middle) {  // достаточно обновить только того ребненка, в
+                               // котором изменяемое значене
             UpdateInternal(node * 2 + 1, left, middle, index, new_value);
         } else {
             UpdateInternal(node * 2 + 2, middle, right, index, new_value);
@@ -58,10 +63,14 @@ private:
         std::size_t query_left,
         std::size_t query_right
     ) {
-        if (query_left <= left && right <= query_right) {
+        if (query_left <= left &&
+            right <=
+                query_right) {  // текущие границы ввершины - подотрезок запроса
             return sum_tree_[node];
         }
-        if (left >= query_right || right <= query_left) {
+        if (left >= query_right ||
+            right <= query_left) {  // текущий отрезок вершины не пересекается с
+                                    // запросом
             return 0;
         }
         std::size_t middle = (left + right) / 2;
