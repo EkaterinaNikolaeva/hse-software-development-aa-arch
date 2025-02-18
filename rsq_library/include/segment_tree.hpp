@@ -9,7 +9,8 @@ namespace rsq {
 // Класс для решения задачи RSQ с помощью дерева отрезков снизу
 class SegmentTree : public IRSQ {
 private:
-    std::vector<int> sum_tree_;
+    std::vector<int> sum_tree_;  // в 0 вершине корень, в 1 и 2 - два ребенка, в
+                                 // 3-6 их дети и так далее
 
     // Метод для пересчета значения в вершине = сумма детей
     void UpdateNodeValue(std::size_t node) {

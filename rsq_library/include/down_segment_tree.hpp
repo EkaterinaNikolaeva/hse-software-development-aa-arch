@@ -8,7 +8,9 @@ namespace rsq {
 
 class DownSegmentTree : public IRSQ {
 private:
-    std::vector<int> sum_tree_;
+    std::vector<int>
+        sum_tree_;  // размера 2n, в последних n вершинах - сам массив, в 1
+                    // вершине - корень, дети вершины i - 2*i и 2*i+1
 
     void BuildTree(const std::vector<int> &input) {
         sum_tree_.resize(2 * INPUT_ARRAY_LENGTH_);
@@ -27,9 +29,12 @@ public:
 
     void Update(std::size_t index, int new_value) final {
         CheckIndex(index);
-        sum_tree_[index += INPUT_ARRAY_LENGTH_] = new_value;
+        sum_tree_[index += INPUT_ARRAY_LENGTH_] =
+            new_value;  // прибавляем к листу
         for (index /= 2; index >= 1; index /= 2) {
-            sum_tree_[index] = sum_tree_[2 * index] + sum_tree_[2 * index + 1];
+            sum_tree_[index] =
+                sum_tree_[2 * index] +
+                sum_tree_[2 * index + 1];  // пересчитываем всех предков
         }
     }
 
@@ -37,7 +42,8 @@ public:
         CheckRange(left, right);
         int sum = 0;
         for (left += INPUT_ARRAY_LENGTH_, right += INPUT_ARRAY_LENGTH_;
-             left <= right; left /= 2, right /= 2) {
+             left <= right;
+             left /= 2, right /= 2) {  // вычисляем сумму от листов к корню
             if (left % 2 == 1) {
                 sum += sum_tree_[left++];
             }
