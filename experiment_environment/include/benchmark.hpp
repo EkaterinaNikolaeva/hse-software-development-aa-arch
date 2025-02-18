@@ -60,7 +60,6 @@ public:
         std::size_t memory_before = GetMemoryUsage();
         auto time = MeasureTime(func, std::forward<Args>(args)...);
         std::size_t memory_after = GetMemoryUsage();
-        std::cout << memory_after << ' ' << memory_before << '\n';
         std::cerr << experiment_name << time << " microseconds\t"
                   << memory_after - memory_before << "KB\n";
     }
