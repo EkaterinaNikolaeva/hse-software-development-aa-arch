@@ -6,6 +6,7 @@
 #include <iostream>
 #include <naive.hpp>
 #include <segment_tree.hpp>
+#include <string>
 #include <vector>
 #include "benchmark.hpp"
 #include "experiment_manager_base.hpp"
@@ -16,24 +17,22 @@ private:
     template <typename RSQType>
     void RunExperiment(const std::string &experiment_name, std::size_t size)
         const {
-        std::cerr << experiment_name << " Naive/" << size << ' '
-                  << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
-                  << " microseconds\n";
-        std::cerr << experiment_name << " Random/" << size << ' '
-                  << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
-                  << " microseconds\n";
-        std::cerr << experiment_name << " Random_Update/" << size << ' '
-                  << Benchmark::MeasureTime(
-                         MakeBenchmarkRandomParameterizedTest<RSQType>, size,
-                         -100, 100, 0.99
-                     )
-                  << " microseconds\n";
-        std::cerr << experiment_name << " Random_Query/" << size << ' '
-                  << Benchmark::MeasureTime(
-                         MakeBenchmarkRandomParameterizedTest<RSQType>, size,
-                         -100, 100, 0.01
-                     )
-                  << " microseconds\n";
+        Benchmark::Measure(
+            experiment_name + "_Naive/" + std::to_string(size),
+            MakeNaiveActions<RSQType>, size
+        );
+        Benchmark::Measure(
+            experiment_name + "_Random/" + std::to_string(size),
+            MakeRandomActions<RSQType>, size
+        );
+        Benchmark::Measure(
+            experiment_name + "_Random_Update/" + std::to_string(size),
+            MakeBenchmarkRandomParameterizedTest<RSQType>, size, -100, 100, 0.99
+        );
+        Benchmark::Measure(
+            experiment_name + "_Random_Query/" + std::to_string(size),
+            MakeBenchmarkRandomParameterizedTest<RSQType>, size, -100, 100, 0.01
+        );
     }
 
 public:

@@ -33,10 +33,10 @@ int main(int argc, char *argv[]) {
         std::string config_filename = argv[1];
         std::vector<int> test_sizes = ConfigLoader::loadConfig(config_filename);
 
-        rsq::benchmark::ExperimentManagerGoogle experimentManagerGoogle(
-            test_sizes
-        );
-        experimentManagerGoogle.RunExperiments();
+        // rsq::benchmark::ExperimentManagerGoogle experimentManagerGoogle(
+        //     test_sizes
+        // );
+        // experimentManagerGoogle.RunExperiments();
         rsq::benchmark::ExperimentManagerNaive experimentManagerNaive(test_sizes
         );
         experimentManagerNaive.RunExperiments();
