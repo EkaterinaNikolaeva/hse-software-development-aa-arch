@@ -4,45 +4,80 @@
 #include <chrono>
 #include <functional>
 #include <iostream>
-#ifdef _WIN32
+
+#ifdef _WIN32 || WIN64
 #include <windows.h>
 #include <psapi.h>
-#elif __APPLE__
-#include <mach/mach.h>
-#include <sys/resource.h>
-#else
-#include <sys/resource.h>
+#elif __unix__ || __linux__
+#include <string.h>
+#include <sys/sysinfo.h>
 #include <unistd.h>
+#include <fstream>
+#elif __APPLE__ || __MACH__
+#include <mach/mach.h>
+#include <sys/sysctl.h>
 #endif
 
 namespace rsq::benchmark {
 
 class Benchmark {
 private:
-    static std::size_t GetMemoryUsage() {
-#ifdef _WIN32
-        PROCESS_MEMORY_COUNTERS memInfo;
-        GetProcessMemoryInfo(GetCurrentProcess(), &memInfo, sizeof(memInfo));
-        return memInfo.WorkingSetSize / 1024;
-#elif __APPLE__
-        struct mach_task_basic_info info;
-        mach_msg_type_number_t size = MACH_TASK_BASIC_INFO_COUNT;
-        if (task_info(
-                mach_task_self(), MACH_TASK_BASIC_INFO, (task_info_t)&info,
-                &size
-            ) == KERN_SUCCESS) {
-            return info.resident_size / 1024;
+    // Physical memory usage
+    std::size_t GetMemoryUsage() {
+#if _WIN32 || WIN64
+        // Реализация для Windows
+        const HANDLE hProcess = GetCurrentProcess();
+        PROCESS_MEMORY_COUNTERS_EX pmc = {0};
+        GetProcessMemoryInfo(
+            hProcess, reinterpret_cast<PROCESS_MEMORY_COUNTERS *>(&pmc),
+            sizeof(pmc)
+        );
+        return pmc.WorkingSetSize / 1024;
+
+#elif __unix__ || __linux__
+        // Реализация для Linux
+        const auto len = strlen("VmRSS:");
+        std::ifstream stream("/proc/self/status");
+        std::string line;
+        size_t result = 0;
+        while (getline(stream, line)) {
+            if (line.compare(0, len, "VmRSS:") == 0) {
+                std::string n = "";
+                for (const auto &c : line) {
+                    if ('0' <= c && c <= '9') {
+                        n += c;
+                    }
+                }
+                result = static_cast<size_t>(std::stoi(n));
+                break;
+            }
         }
-        return 0;
+
+        stream.close();
+
+        return result;
+
+#elif __APPLE__ || __MACH__
+        // Реализация для macOS
+        task_t targetTask = mach_task_self();
+        task_vm_info_data_t ti;
+        mach_msg_type_number_t count = TASK_VM_INFO_COUNT;
+
+        const auto result = task_info(
+            targetTask, TASK_VM_INFO, reinterpret_cast<task_info_t>(&ti), &count
+        );
+        if (result == KERN_SUCCESS) {
+            return ti.phys_footprint;
+        } else {
+            return 0;
+        }
 #else
-        struct rusage usage;
-        getrusage(RUSAGE_SELF, &usage);
-        return usage.ru_maxrss;
+        throw std::runtime_error("Unsupported platform");
 #endif
     }
 
     template <typename F, typename... Args>
-    static double MeasureTime(F func, Args &&...args) {
+    static int64_t MeasureTime(F func, Args &&...args) {
         auto start = std::chrono::high_resolution_clock::now();
         func(std::forward<Args>(args)...);
         auto end = std::chrono::high_resolution_clock::now();
@@ -55,13 +90,15 @@ private:
 
 public:
     template <typename F, typename... Args>
-    static void
-    Measure(const std::string &experiment_name, F func, Args &&...args) {
+    static std::string Measure(F func, Args &&...args) {
         std::size_t memory_before = GetMemoryUsage();
         auto time = MeasureTime(func, std::forward<Args>(args)...);
         std::size_t memory_after = GetMemoryUsage();
-        std::cerr << experiment_name << ' ' << time << " microseconds\t"
-                  << memory_after - memory_before << " KB\n";
+
+        std::ostringstream result;
+        result << time << "," << memory_after - memory_before;
+        << ;
+        return result.str();
     }
 };
 

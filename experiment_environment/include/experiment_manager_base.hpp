@@ -71,7 +71,7 @@ protected:
 
         RSQType rsq(data);
     }
-    
+
 public:
     explicit ExperimentManagerBase(std::vector<int> sizes)
         : random_sizes_(std::move(sizes)) {

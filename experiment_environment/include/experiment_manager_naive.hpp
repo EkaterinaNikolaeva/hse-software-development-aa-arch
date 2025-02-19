@@ -17,34 +17,37 @@ private:
     template <typename RSQType>
     void RunExperiment(const std::string &experiment_name, std::size_t size)
         const {
-        std::cerr << "Naive," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
+        std::cerr << "Naive," << ',' << experiment_name << ',' << size << ','
+                  << Benchmark::Measure(MakeNaiveActions<RSQType>, size)
                   << "\n";
-        std::cerr << "Random," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(MakeRandomActions<RSQType>, size)
+        std::cerr << "Random," << ',' << experiment_name << ',' << size << ','
+                  << Benchmark::MeasureMakeRandomActions<RSQType>, size)
                   << "\n";
-        std::cerr << "Random_Update," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(
+        std::cerr << "Random_Update," << ',' << experiment_name << ',' << size
+                  << ','
+                  << Benchmark::Measure(
                          MakeBenchmarkRandomParameterizedTest<RSQType>, size,
                          -100, 100, 0.99
                      )
                   << "\n";
-        std::cerr << "Random_Query," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(
+        std::cerr << "Random_Query," << ',' << experiment_name << ',' << size
+                  << ','
+                  << Benchmark::Measure(
                          MakeBenchmarkRandomParameterizedTest<RSQType>, size,
                          -100, 100, 0.01
                      )
                   << "\n";
-        std::cerr <<  "Constructor," << size << ',' << experiment_name << ','
-                << Benchmark::MeasureTime(
-                        MakeConstructor<RSQType>, size
-                    )
-                << "\n";   
+        std::cerr << "Constructor," << ',' << experiment_name << ',' << size
+                  << ','
+                  << Benchmark::MeasureTime(MakeConstructor<RSQType>, size)
+                  << "\n";
     }
 
 public:
     explicit ExperimentManagerNaive(const std::vector<int> &sizes)
         : ExperimentManagerBase(sizes) {
+        std::cerr << "Benchmark_name,Algorithm_name,Size_of_structure,Time("
+                     "microseconds),Memmory(KB)\n";
     }
 
     void RunExperiments() override {
