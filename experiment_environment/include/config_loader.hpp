@@ -31,7 +31,7 @@ class ConfigLoader {
 public:
     static std::vector<int> loadConfig(const std::string &filename) {
         std::string path =
-            isAbsolutePath(filename) ? filename : PROJECT_ROOT + filename;
+            isAbsolutePath(filename) ? filename : PROJECT_ROOT + '/' + filename;
 
         std::ifstream file(path);
         if (!file) {
