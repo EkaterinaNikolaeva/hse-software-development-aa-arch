@@ -16,24 +16,29 @@ private:
     template <typename RSQType>
     void RunExperiment(const std::string &experiment_name, std::size_t size)
         const {
-        std::cerr << experiment_name << " Naive/" << size << ' '
+        std::cerr << "Naive," << size << ',' << experiment_name << ','
                   << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
-                  << " microseconds\n";
-        std::cerr << experiment_name << " Random/" << size << ' '
-                  << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
-                  << " microseconds\n";
-        std::cerr << experiment_name << " Random_Update/" << size << ' '
+                  << "\n";
+        std::cerr << "Random," << size << ',' << experiment_name << ','
+                  << Benchmark::MeasureTime(MakeRandomActions<RSQType>, size)
+                  << "\n";
+        std::cerr << "Random_Update," << size << ',' << experiment_name << ','
                   << Benchmark::MeasureTime(
                          MakeBenchmarkRandomParameterizedTest<RSQType>, size,
                          -100, 100, 0.99
                      )
-                  << " microseconds\n";
-        std::cerr << experiment_name << " Random_Query/" << size << ' '
+                  << "\n";
+        std::cerr << "Random_Query," << size << ',' << experiment_name << ','
                   << Benchmark::MeasureTime(
                          MakeBenchmarkRandomParameterizedTest<RSQType>, size,
                          -100, 100, 0.01
                      )
-                  << " microseconds\n";
+                  << "\n";
+        std::cerr <<  "Constructor," << size << ',' << experiment_name << ','
+                << Benchmark::MeasureTime(
+                        MakeConstructor<RSQType>, size
+                    )
+                << "\n";   
     }
 
 public:
@@ -43,8 +48,8 @@ public:
 
     void RunExperiments() override {
         for (std::size_t size : random_sizes_) {
+            RunExperiment<NaiveRSQ>("NaiveRSQ", size);
             RunExperiment<SegmentTree>("SegmentTree", size);
-            // RunExperiment<NaiveRSQ>("NaiveRSQ", size);
             RunExperiment<SqrtRSQ>("SqrtRSQ", size);
             RunExperiment<FenwickTree>("Fenwick", size);
             RunExperiment<DownSegmentTree>("DownSegmentTree", size);
