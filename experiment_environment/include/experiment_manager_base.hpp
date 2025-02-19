@@ -64,6 +64,14 @@ protected:
         }
     }
 
+    template <typename RSQType>
+    static void MakeConstructor(std::size_t size) {
+        rsq::utils::RandomDataGenerator generator(size);
+        std::vector<int> data = generator.GenerateRandomVector();
+
+        RSQType rsq(data);
+    }
+    
 public:
     explicit ExperimentManagerBase(std::vector<int> sizes)
         : random_sizes_(std::move(sizes)) {
