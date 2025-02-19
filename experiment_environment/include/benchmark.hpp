@@ -5,8 +5,8 @@
 #include <functional>
 #include <iostream>
 #ifdef _WIN32
-#include <psapi.h>
 #include <windows.h>
+#include <psapi.h>
 #elif __APPLE__
 #include <mach/mach.h>
 #include <sys/resource.h>

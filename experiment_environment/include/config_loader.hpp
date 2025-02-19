@@ -21,10 +21,18 @@
 // Если файл не удаётся открыть или формат некорректен, выбрасывается
 // `std::runtime_error`.
 
+static bool isAbsolutePath(const std::string &path) {
+    return (
+        !path.empty() && (path[0] == '/' || path.find(":") != std::string::npos)
+    );
+}
+
 class ConfigLoader {
 public:
     static std::vector<int> loadConfig(const std::string &filename) {
-        auto path = PROJECT_ROOT + filename;
+        std::string path =
+            isAbsolutePath(filename) ? filename : PROJECT_ROOT + filename;
+
         std::ifstream file(path);
         if (!file) {
             throw std::runtime_error(
@@ -39,8 +47,7 @@ public:
             !config["random_sizes"].is_array()) {
             throw std::runtime_error(
                 "Error: Invalid config format. 'random_sizes' array is missing "
-                "or "
-                "incorrect."
+                "or incorrect."
             );
         }
 
