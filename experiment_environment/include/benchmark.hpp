@@ -23,7 +23,7 @@ private:
 #ifdef _WIN32
         PROCESS_MEMORY_COUNTERS memInfo;
         GetProcessMemoryInfo(GetCurrentProcess(), &memInfo, sizeof(memInfo));
-        return memInfo.WorkingSetSize / 1024.0;
+        return memInfo.WorkingSetSize / 1024;
 #elif __APPLE__
         struct mach_task_basic_info info;
         mach_msg_type_number_t size = MACH_TASK_BASIC_INFO_COUNT;
@@ -31,7 +31,7 @@ private:
                 mach_task_self(), MACH_TASK_BASIC_INFO, (task_info_t)&info,
                 &size
             ) == KERN_SUCCESS) {
-            return info.resident_size / 1024.0;
+            return info.resident_size / 1024;
         }
         return 0;
 #else
