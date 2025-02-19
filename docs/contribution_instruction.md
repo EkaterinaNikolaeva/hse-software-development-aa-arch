@@ -10,4 +10,10 @@
 
 3) Внесите его с список тестируемых алгоритмов в `rsq_library/tests/main.cpp`
 
-4) 
+4) Добавьте в список алгоритмов для бенчмарка в `experiment_environment/src/irsq_benchmark.cpp`
+
+## Добавление тестов
+
+1) Реализуйте класс, содержащий тесты в `rsq_library/tests/include/`
+
+2) Подключите тесты в `rsq_library/tests/main.cpp`
