@@ -18,19 +18,19 @@ private:
     void RunExperiment(const std::string &experiment_name, std::size_t size)
         const {
         Benchmark::Measure(
-            experiment_name + "_Naive/" + std::to_string(size) + "_",
+            experiment_name + "_Naive/" + std::to_string(size),
             MakeNaiveActions<RSQType>, size
         );
         Benchmark::Measure(
-            experiment_name + "_Random/" + std::to_string(size) + "_",
+            experiment_name + "_Random/" + std::to_string(size),
             MakeRandomActions<RSQType>, size
         );
         Benchmark::Measure(
-            experiment_name + "_Random_Update/" + std::to_string(size) + "_",
+            experiment_name + "_Random_Update/" + std::to_string(size),
             MakeBenchmarkRandomParameterizedTest<RSQType>, size, -100, 100, 0.99
         );
         Benchmark::Measure(
-            experiment_name + "_Random_Query/" + std::to_string(size) + "_",
+            experiment_name + "_Random_Query/" + std::to_string(size),
             MakeBenchmarkRandomParameterizedTest<RSQType>, size, -100, 100, 0.01
         );
     }
