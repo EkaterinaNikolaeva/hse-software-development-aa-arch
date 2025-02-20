@@ -38,8 +38,7 @@ private:
                      )
                   << "\n";
         std::cerr << "Constructor" << ',' << experiment_name << ',' << size
-                  << ','
-                  << Benchmark::Measure(MakeConstructor<RSQType>, size)
+                  << ',' << Benchmark::Measure(MakeConstructor<RSQType>, size)
                   << "\n";
     }
 
