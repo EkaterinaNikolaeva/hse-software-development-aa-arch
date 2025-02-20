@@ -36,12 +36,11 @@ private:
 
 #elif __unix__ || __linux__
         // Реализация для Linux
-        const auto len = strlen("VmRSS:");
         std::ifstream stream("/proc/self/status");
         std::string line;
         size_t result = 0;
         while (getline(stream, line)) {
-            if (line.compare(0, len, "VmRSS:") == 0) {
+            if (line.compare(0, 6, "VmRSS:") == 0) {
                 std::string n = "";
                 for (const auto &c : line) {
                     if ('0' <= c && c <= '9') {
