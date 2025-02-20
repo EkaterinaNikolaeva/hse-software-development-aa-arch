@@ -5,7 +5,7 @@
 #include <functional>
 #include <iostream>
 
-#ifdef _WIN32 || WIN64
+#if _WIN32 || WIN64
 #include <windows.h>
 #include <psapi.h>
 #elif __unix__ || __linux__
@@ -23,7 +23,7 @@ namespace rsq::benchmark {
 class Benchmark {
 private:
     // Physical memory usage
-    std::size_t GetMemoryUsage() {
+    static std::size_t GetMemoryUsage() {
 #if _WIN32 || WIN64
         // Реализация для Windows
         const HANDLE hProcess = GetCurrentProcess();
@@ -97,7 +97,6 @@ public:
 
         std::ostringstream result;
         result << time << "," << memory_after - memory_before;
-        << ;
         return result.str();
     }
 };
