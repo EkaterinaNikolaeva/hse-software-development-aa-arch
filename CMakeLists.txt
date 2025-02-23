@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories(${CMAKE_SOURCE_DIR}/rsq_library/include)
 include_directories(${CMAKE_SOURCE_DIR}/rsq_library/utils)
+include_directories(${CMAKE_SOURCE_DIR}/experiment_environment/include)
 
 
 find_package(benchmark REQUIRED)

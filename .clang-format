@@ -7,6 +7,8 @@ AllowShortBlocksOnASingleLine: false
 AllowShortFunctionsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
+SortIncludes: Never
+
 
 # Only from clang-format 14.0.0
 AlignAfterOpenBracket: BlockIndent
