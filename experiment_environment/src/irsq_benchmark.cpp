@@ -1,16 +1,12 @@
 #include <benchmark/benchmark.h>
-#include <naive.hpp>
-#include <vector>
-#include "config_loader.hpp"
-#include "random_data_generator.hpp"
-#include <benchmark/benchmark.h>
 #include <experiment_manager_google.hpp>
 #include <experiment_manager_naive.hpp>
 #include <functional>
 #include <memory>
+#include <naive.hpp>
+#include <vector>
 #include "config_loader.hpp"
 #include "random_data_generator.hpp"
-
 
 // Конфиг должен содержать список размеров тестируемых наборов данных.
 // Пример:

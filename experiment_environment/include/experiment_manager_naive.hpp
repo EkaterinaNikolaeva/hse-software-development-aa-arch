@@ -11,8 +11,12 @@
 #include "experiment_manager_base.hpp"
 
 namespace rsq::benchmark {
+
+// Менеджер использует самописную библиотеку для бенчмаркинга
 class ExperimentManagerNaive : public ExperimentManagerBase {
 private:
+    // передаем в Benchmark::MeasureTime метод, время работы которого измеряем и
+    // параметры
     template <typename RSQType>
     void RunExperiment(const std::string &experiment_name, std::size_t size)
         const {
@@ -34,11 +38,9 @@ private:
                          -100, 100, 0.01
                      )
                   << "\n";
-        std::cerr <<  "Constructor," << size << ',' << experiment_name << ','
-                << Benchmark::MeasureTime(
-                        MakeConstructor<RSQType>, size
-                    )
-                << "\n";   
+        std::cerr << "Constructor," << size << ',' << experiment_name << ','
+                  << Benchmark::MeasureTime(MakeConstructor<RSQType>, size)
+                  << "\n";
     }
 
 public:

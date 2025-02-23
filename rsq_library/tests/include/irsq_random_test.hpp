@@ -16,11 +16,12 @@ template <typename T>
 class RandomIRSQTest : public ::testing::Test {
 protected:
     void RandomActionsTest(
-        double update_probability = 0.5,
-        size_t total_actions_number = 1'000'000,
-        size_t vector_size = 1'000,
-        int min_element = -100,
-        int max_element = 100
+        double update_probability =
+            0.5,  // вероятность совершения запроса изменения элемента
+        size_t total_actions_number = 1'000'000,  // общее количество действий
+        size_t vector_size = 1'000,  // размер массива
+        int min_element = -100,  // минимальное значение элемента в массиве
+        int max_element = 100  // максимальное значение элемента в массиве
     ) {
         utils::RandomDataGenerator generator(
             vector_size, min_element, max_element, update_probability
@@ -29,7 +30,8 @@ protected:
         utils::RSQConsistencyChecker<T> checker(input_data);
 
         for (size_t action = 0; action < total_actions_number; ++action) {
-            if (generator.CheckChangeAction()) {
+            if (generator.CheckChangeAction(
+                )) {  // проверяем, какого типа текущее действие
                 checker.SimpleCheckUpdate(
                     generator.GetRandomIndex(), generator.GetRandomInt()
                 );

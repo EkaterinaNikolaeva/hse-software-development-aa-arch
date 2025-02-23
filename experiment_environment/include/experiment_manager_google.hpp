@@ -12,6 +12,7 @@
 
 namespace rsq::benchmark {
 
+// Менеджер использует google benchmark
 class ExperimentManagerGoogle : public ExperimentManagerBase {
 private:
     template <typename RSQType>
@@ -49,7 +50,9 @@ public:
     static void RunNaiveActions(::benchmark::State &state) {
         std::size_t size = state.range(0);
         for (auto _ : state) {
-            MakeNaiveActions<RSQType>(size);
+            MakeNaiveActions<RSQType>(size
+            );  // вызываем метод, определенный в базовом классе, google
+                // benchmark посчитает за нас
         }
     }
 
@@ -57,7 +60,9 @@ public:
     static void RunRandomActions(::benchmark::State &state) {
         size_t size = state.range(0);
         for (auto _ : state) {
-            MakeRandomActions<RSQType>(size);
+            MakeRandomActions<RSQType>(size
+            );  // вызываем метод, определенный в базовом классе, google
+                // benchmark посчитает за нас
         }
     }
 
@@ -72,7 +77,8 @@ public:
         for (auto _ : state) {
             MakeBenchmarkRandomParameterizedTest<RSQType>(
                 size, min_element, max_element, update_probability
-            );
+            );  // вызываем метод, определенный в базовом классе, google
+                // benchmark посчитает за нас
         }
     }
 

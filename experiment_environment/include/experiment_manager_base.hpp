@@ -10,7 +10,6 @@ class ExperimentManagerBase {
 protected:
     std::vector<int> random_sizes_;
 
-    
     template <typename RSQType>
     static void MakeNaiveActions(std::size_t size) {
         std::vector<int> data(size, 1);
