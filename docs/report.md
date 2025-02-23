@@ -192,11 +192,10 @@
   не требуют больших выделений памяти или используют более эффективные структуры данных.
 
 
-<details> 
-Оценка проводилась на: 
+Оценка памяти проводилась на: 
 ```
 Операционная система и архитектура:
-Linux tanya-Vivobook-ASUSLaptop-M3401QA-M3401QA 6.8.0-52-generic #53~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Jan 15 19:18:46 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+Linux tanya-Vivobook-ASUSLaptop-M3401QA-M3401QA 6.8.0-52-generic #53~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC x86_64 x86_64 x86_64 GNU/Linux
 
 Процессор:
 Architecture:                         x86_64
@@ -224,24 +223,10 @@ L2 cache:                             3 MiB (6 instances)
 L3 cache:                             16 MiB (1 instance)
 NUMA node(s):                         1
 NUMA node0 CPU(s):                    0-11
-Vulnerability Gather data sampling:   Not affected
-Vulnerability Itlb multihit:          Not affected
-Vulnerability L1tf:                   Not affected
-Vulnerability Mds:                    Not affected
-Vulnerability Meltdown:               Not affected
-Vulnerability Mmio stale data:        Not affected
-Vulnerability Reg file data sampling: Not affected
-Vulnerability Retbleed:               Not affected
-Vulnerability Spec rstack overflow:   Vulnerable: Safe RET, no microcode
-Vulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
-Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
-Vulnerability Spectre v2:             Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
-Vulnerability Srbds:                  Not affected
-Vulnerability Tsx async abort:        Not affected
+
 
 Объем оперативной памяти:
                total        used        free      shared  buff/cache   available
 Mem:            15Gi       6,6Gi       2,3Gi       369Mi       6,2Gi       7,7Gi
 Swap:          2,0Gi          0B       2,0Gi
 ```
-</details>
