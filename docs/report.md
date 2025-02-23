@@ -243,5 +243,5 @@ Vulnerability Tsx async abort:        Not affected
                total        used        free      shared  buff/cache   available
 Mem:            15Gi       6,6Gi       2,3Gi       369Mi       6,2Gi       7,7Gi
 Swap:          2,0Gi          0B       2,0Gi
-````
-<details>
+```
+</details>
