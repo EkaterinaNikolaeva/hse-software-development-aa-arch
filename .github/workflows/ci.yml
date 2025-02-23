@@ -37,7 +37,7 @@ jobs:
       run: cmake --build build
 
     - name: Run benchmark
-      run: ./build/my_benchmark experiment_environment/configs/config.json
+      run: ./build/my_benchmark /experiment_environment/configs/config.json
 
     - name: Run tests
       run: ctest --test-dir build/rsq_library/tests/ -V
