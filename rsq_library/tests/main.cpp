@@ -7,6 +7,7 @@
 #include <naive.hpp>
 #include <segment_tree.hpp>
 #include <sqrt_rsq.hpp>
+#include <down_segment_tree.hpp>
 
 using SegmentTreeTest = rsq::tests::IRSQTest<rsq::SegmentTree>;
 using SegmentTreeBetterTest = rsq::tests::IRSQBetterTest<rsq::SegmentTree>;
