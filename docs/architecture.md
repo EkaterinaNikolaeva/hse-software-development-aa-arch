@@ -85,54 +85,57 @@ public:
 
 #### 1. Конфигурация экспериментов
 
-Конфигурация задаётся прямо в коде для упрощения, без внешних файлов. Пример:
+Конфигурация эксперимента задается через конфиг-файл, загружается с помощью класса ConfigLoader.
 
 ```cpp
-struct Config {
-    std::vector<RSQAlgorithm> algorithms = {RSQAlgorithm::PrefixSum, RSQAlgorithm::SegmentTree, RSQAlgorithm::FenwickTree};
-    std::vector<int> dataSizes = {100, 1000, 10000};
-    int queryCount = 100;
+class ConfigLoader {
+public:
+    // Возвращает исследуемые размеры входных данных
+    static std::vector<int> loadConfig(const std::string &filename);
 };
 ```
 
 #### 2. Менеджер экспериментов
 
-Основной компонент, который управляет всеми этапами эксперимента. Он будет:
+Реализован базовый класс - менеджер экспериментов. Его наследники - конкретные имплементации, которые управляет всеми этапами эксперимента и используют конкретную систему бенчмаркинга.
+
+Менеджер эксперимент должен:
 
 * Генерировать данные в зависимости от конфигурации.
 * Проводить измерение времени работы и количества памяти через Benchmark.
-* Выводить результаты на экран и в файл.
-
-Примерная структура класса, детали могут меняться
+* Выводить результаты на экран.
 
 ```cpp
-class ExperimentManager {
+class ExperimentManagerBase {
+private:
+    // Тестируем работу на заранее опреденных данных
+    template <typename RSQType>
+    static void MakeNaiveActions(std::size_t size);
+
+    // Тестируем работу на случайных данных
+    template <typename RSQType>
+    static void MakeRandomActions(std::size_t size);
+
+    // Тестируем работу на случайных параметризованных данных
+    template <typename RSQType>
+    static void MakeBenchmarkRandomParameterizedTest(
+        std::size_t size,
+        int min_element,
+        int max_element,
+        double update_probability
+    )
+    
+    // И другие эксперименты
 public:
-    // Установка конфигурации для экспериментов
-    void setConfig(const Config& config);
-
-    // Добавление алгоритма для тестирования
-    void addAlgorithm(RSQAlgorithm algorithm);
-
-    // Генерация данных (случайные, монотонные и т.д.)
-    void generateData(size_t dataSize, const std::string& dataType);
-
-    // Добавление пользовательских данных для тестирования
-    void setCustomData(const std::vector<int>& data); 
-    void setCustomDataFromFile(const std::string& filePath); 
+    // Конструктор, принимающий исследуемые размеры массивов
+    explicit ExperimentManagerBase(std::vector<int> sizes);
 
     // Запуск экспериментов
     void runExperiments();
-
-    // Получение результатов
-    std::vector<std::string> getResults() const;
-
-    // Визуализация результатов
-    void visualizeResults(const std::string& outputPath, const std::string& graphType = "bar");
 };
 ```
 
-#### 4. Модуль визуализации
+#### 3. Модуль визуализации
 
 Визуализация реализуется в отдельном классе, который включён в менеджер. Примерная структура класса, детали могут меняться
 

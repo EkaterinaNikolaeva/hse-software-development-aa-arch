@@ -24,7 +24,7 @@
 class ConfigLoader {
 public:
     static std::vector<int> loadConfig(const std::string &filename) {
-        auto path = PROJECT_ROOT + filename;
+        auto path = std::string(PROJECT_ROOT) + "/" + filename;
         std::ifstream file(path);
         if (!file) {
             throw std::runtime_error(

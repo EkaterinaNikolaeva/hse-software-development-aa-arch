@@ -32,7 +32,9 @@ protected:
             EXPECT_EQ(rsq->Query(0, 5), 36);
             EXPECT_EQ(rsq->Query(1, 3), 15);
 
-            EXPECT_THROW(rsq->Query(0, 6), RSQOutOfBoundsError);
+            EXPECT_THROW(
+                rsq->Query(0, 6), RSQOutOfBoundsError
+            );  // некорректный запрос: 6 > размера массива
         }
         {
             auto rsq = CreateRSQInstance();

@@ -1,18 +1,26 @@
 #ifndef RSQ_RANDOM_DATA_GENERATOR_HPP
 #define RSQ_RANDOM_DATA_GENERATOR_HPP
 
+#include <ctime>
 #include <random>
 #include <vector>
 
 namespace rsq::utils {
 
+// Генератор случайных чисел, массивов и так далее
 class RandomDataGenerator {
 private:
     std::mt19937 rng_;
-    std::uniform_int_distribution<int> min_max_dis_;
-    std::uniform_real_distribution<double> zero_one_dis_;
-    std::uniform_int_distribution<std::size_t> index_dis_;
-    std::bernoulli_distribution action_dis_;
+    std::uniform_int_distribution<int>
+        min_max_dis_;  // генератор целого значения на [min; max] c равномерным
+                       // распределением
+    std::uniform_real_distribution<double>
+        zero_one_dis_;  // генератор double на [0; 1] c равномерным
+                        // распределением
+    std::uniform_int_distribution<std::size_t>
+        index_dis_;  // генератор индекса массива
+    std::bernoulli_distribution
+        action_dis_;  // генератор очередного действия с распредением Бернулли
 
 public:
     explicit RandomDataGenerator(

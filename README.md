@@ -22,13 +22,13 @@
 
 1. Склонируйте репозиторий
 
-```
+```shell
 git clone https://github.com/EkaterinaNikolaeva/hse-software-development-aa-arch.git
 ```
 
 2. Установите зависимости
 
-```
+```shell
         sudo apt-get update
         sudo apt-get install -y cmake g++ lcov libgtest-dev libbenchmark-dev nlohmann-json3-dev```
 ```
@@ -40,26 +40,29 @@ git clone https://github.com/EkaterinaNikolaeva/hse-software-development-aa-arch
 
 * Найстройте CMake:
 
-```
+```shell
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="--coverage" -DCMAKE_EXE_LINKER_FLAGS="--coverage"
 ```
 
 * Соберите
 
-```
+```shell
 cmake --build build
 ```
 
 * Чтобы запустить тесты производительности:
 
-```
+```shell
 ./build/my_benchmark <путь-к-конфигу-от-корня-репозитрия>
+# Example:
+./build/my_benchmark experiment_environment/configs/config.json
 ```
+
 
 Пример файла `config.json`. Содержит список размеров входных данных
 для случайных тестов.
 
-```
+```json
 {
   "random_sizes": [10, 100, 10000]
 }
@@ -67,12 +70,27 @@ cmake --build build
 
 * Чтобы запустить юнит-тесты:
 
-```
+```shell
 ctest --test-dir build/rsq_library/tests/ -V
 ```
 
 * Чтобы посчитать покрытие кода:
 
-```
+```shell
 lcov --capture --directory build --output-file coverage.info && lcov --remove coverage.info '/usr/*' --output-file coverage.info && lcov --list coverage.info
 ```
+
+## Запуск контейнера с бенчмаркингом
+
+```shell
+docker build -t irsq_benchmark .
+docker run --rm --cpuset-cpus="0" --privileged irsq_benchmark 
+```
+
+## Внести вклад
+
+Мы будем рады, если вы присоединитесь к нашему сообществу!
+
+Мы приветствуем как добавление новых алгоритмов решения задачи RSQ, так и вклад в развитие тестов и экспериментальной среды.
+
+Подробнее с рекомендациями по внесению вклада в проект можно ознакомиться в `docs/contribution_instruction.md`
