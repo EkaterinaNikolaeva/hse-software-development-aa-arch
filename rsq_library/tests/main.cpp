@@ -6,6 +6,8 @@
 #include <irsq_test.hpp>
 #include <naive.hpp>
 #include <segment_tree.hpp>
+#include <sharded_prefix_sum.hpp>
+#include <sharded_lazy_prefix_sum.hpp>
 #include <sqrt_rsq.hpp>
 
 using SegmentTreeTest = rsq::tests::IRSQTest<rsq::SegmentTree>;
@@ -19,6 +21,10 @@ using FenwickRandmomTest = rsq::tests::RandomIRSQTest<rsq::SqrtRSQ>;
 using DownSegmentTreeTest = rsq::tests::IRSQTest<rsq::DownSegmentTree>;
 using DownSegmentTreeRandomTest =
     rsq::tests::RandomIRSQTest<rsq::DownSegmentTree>;
+using ShardedPrefixSumTest = rsq::tests::IRSQTest<rsq::ShardedPrefixSum>;
+using ShardedPrefixSumRandmomTest = rsq::tests::RandomIRSQTest<rsq::ShardedPrefixSum>;
+using ShardedLazyPrefixSumTest = rsq::tests::IRSQTest<rsq::ShardedLazyPrefixSum>;
+using ShardedLazyPrefixSumRandmomTest = rsq::tests::RandomIRSQTest<rsq::ShardedLazyPrefixSum>;
 
 TEST_F(SegmentTreeTest, BasicOperationsSegmentTree) {
     SimpleTestIRSQ();
@@ -74,6 +80,22 @@ TEST_F(DownSegmentTreeTest, BasicOperations) {
 }
 
 TEST_F(DownSegmentTreeRandomTest, RandomOperations) {
+    RandomActionsTest();
+}
+
+TEST_F(ShardedPrefixSumTest, BasicOperations) {
+    SimpleTestIRSQ();
+}
+
+TEST_F(ShardedPrefixSumRandmomTest, RandomOperations) {
+    RandomActionsTest();
+}
+
+TEST_F(ShardedLazyPrefixSumTest, BasicOperations) {
+    SimpleTestIRSQ();
+}
+
+TEST_F(ShardedLazyPrefixSumRandmomTest, RandomOperations) {
     RandomActionsTest();
 }
 
