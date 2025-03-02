@@ -21,6 +21,8 @@ using FenwickRandmomTest = rsq::tests::RandomIRSQTest<rsq::SqrtRSQ>;
 using DownSegmentTreeTest = rsq::tests::IRSQTest<rsq::DownSegmentTree>;
 using DownSegmentTreeRandomTest =
     rsq::tests::RandomIRSQTest<rsq::DownSegmentTree>;
+using PrefixSumTest = rsq::tests::IRSQTest<rsq::PrefixSum>;
+using PrefixSumRandmomTest = rsq::tests::RandomIRSQTest<rsq::PrefixSum>;
 using ShardedPrefixSumTest = rsq::tests::IRSQTest<rsq::ShardedPrefixSum>;
 using ShardedPrefixSumRandmomTest = rsq::tests::RandomIRSQTest<rsq::ShardedPrefixSum>;
 using ShardedLazyPrefixSumTest = rsq::tests::IRSQTest<rsq::ShardedLazyPrefixSum>;
@@ -80,6 +82,14 @@ TEST_F(DownSegmentTreeTest, BasicOperations) {
 }
 
 TEST_F(DownSegmentTreeRandomTest, RandomOperations) {
+    RandomActionsTest();
+}
+
+TEST_F(PrefixSumTest, BasicOperations) {
+    SimpleTestIRSQ();
+}
+
+TEST_F(PrefixSumRandmomTest, RandomOperations) {
     RandomActionsTest();
 }
 
