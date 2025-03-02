@@ -35,7 +35,7 @@ public:
         pending_updates_.clear();
 
 
-        return Query(left, right);
+        return prefix_sum_.Query(left, right);
     }    
 };
 

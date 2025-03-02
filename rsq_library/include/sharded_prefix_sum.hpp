@@ -32,11 +32,13 @@ public:
           data_(input) {
         for (std::size_t i = 0; i < data_.size(); i++) {
             std::size_t shard_index = ToShardIndex(i);
-            if (shards_.size() < shard_index) {
+
+            if (shards_.size() <= shard_index) {
                 shards_.emplace_back(std::vector<int>(1, 0), 0);
             }
-            shards_.back().prefix_sum.push_back(data_[i] + shards_.back().prefix_sum.back());
+
             shards_.back().sum += data_[i];
+            shards_.back().prefix_sum.push_back(shards_.back().sum);
         }
     }
 
@@ -52,6 +54,7 @@ public:
             shards_[shard_index].prefix_sum[i] += delta;
         }
         shards_[shard_index].sum += delta;
+        data_[index] += delta;
     }
 
     int Query(std::size_t left, std::size_t right) final {
