@@ -6,6 +6,11 @@
 #include <iostream>
 #include <naive.hpp>
 #include <segment_tree.hpp>
+#include <prefix_sum.hpp>
+#include <lazy_prefix_sum.hpp>
+#include <sharded_prefix_sum.hpp>
+#include <sharded_lazy_prefix_sum.hpp>
+#include <prefix_sum.hpp>
 #include <vector>
 #include "benchmark.hpp"
 #include "experiment_manager_base.hpp"
@@ -55,6 +60,10 @@ public:
             RunExperiment<SqrtRSQ>("SqrtRSQ", size);
             RunExperiment<FenwickTree>("Fenwick", size);
             RunExperiment<DownSegmentTree>("DownSegmentTree", size);
+            RunExperiment<PrefixSum>("PrefixSum", size);
+            RunExperiment<LazyPrefixSum>("LazyPrefixSum", size);
+            RunExperiment<ShardedPrefixSum>("ShardedPrefixSum", size);
+            RunExperiment<ShardedLazyPrefixSum>("ShardedLazyPrefixSum", size);
         }
     }
 };
