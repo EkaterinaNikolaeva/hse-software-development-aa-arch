@@ -54,7 +54,10 @@ cmake --build build
 
 ```shell
 ./build/my_benchmark <путь-к-конфигу-от-корня-репозитрия>
+# Example:
+./build/my_benchmark experiment_environment/configs/config.json
 ```
+
 
 Пример файла `config.json`. Содержит список размеров входных данных
 для случайных тестов.

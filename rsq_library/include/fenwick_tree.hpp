@@ -10,6 +10,8 @@ class FenwickTree : public IRSQ {
 private:
     std::vector<int> data_;
 
+    // необходимо обновить все элементы массива, которые зависят от измененного
+    // элемента, а именно те data_[i], где F(i) <= k <= i
     void UpdateInternal(std::size_t index, int value) {
         while (index < data_.size()) {
             data_[index] += value;
@@ -17,6 +19,7 @@ private:
         }
     }
 
+    // функция суммирования на префиксе
     int QueryInternal(std::size_t index) const {
         int sum = 0;
         while (index > 0) {
@@ -36,7 +39,8 @@ public:
 
     int Query(std::size_t left, std::size_t right) override {
         CheckRange(left, right);
-        return QueryInternal(right + 1) - QueryInternal(left);
+        return QueryInternal(right + 1) -
+               QueryInternal(left);  // отрезок = разность двух префиксов
     }
 
     void Update(std::size_t index, int value) override {

@@ -4,7 +4,6 @@
 #include <functional>
 #include <memory>
 #include <naive.hpp>
-#include <segment_tree.hpp>
 #include <vector>
 #include "config_loader.hpp"
 #include "random_data_generator.hpp"
@@ -41,7 +40,6 @@ int main(int argc, char *argv[]) {
         rsq::benchmark::ExperimentManagerNaive experimentManagerNaive(test_sizes
         );
         experimentManagerNaive.RunExperiments();
-
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
         return 1;

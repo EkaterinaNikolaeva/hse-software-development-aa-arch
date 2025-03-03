@@ -12,33 +12,35 @@
 #include "experiment_manager_base.hpp"
 
 namespace rsq::benchmark {
+
+// Менеджер использует самописную библиотеку для бенчмаркинга
 class ExperimentManagerNaive : public ExperimentManagerBase {
 private:
+    // передаем в Benchmark::MeasureTime метод, время работы которого измеряем и
+    // параметры
     template <typename RSQType>
     void RunExperiment(const std::string &experiment_name, std::size_t size)
         const {
-        std::cerr << "Naive" << ',' << experiment_name << ',' << size << ','
-                  << Benchmark::Measure(MakeNaiveActions<RSQType>, size)
+        std::cerr << "Naive," << size << ',' << experiment_name << ','
+                  << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
                   << "\n";
-        std::cerr << "Random" << ',' << experiment_name << ',' << size << ','
-                  << Benchmark::Measure(MakeRandomActions<RSQType>, size)
+        std::cerr << "Random," << size << ',' << experiment_name << ','
+                  << Benchmark::MeasureTime(MakeRandomActions<RSQType>, size)
                   << "\n";
-        std::cerr << "Random_Update" << ',' << experiment_name << ',' << size
-                  << ','
-                  << Benchmark::Measure(
+        std::cerr << "Random_Update," << size << ',' << experiment_name << ','
+                  << Benchmark::MeasureTime(
                          MakeBenchmarkRandomParameterizedTest<RSQType>, size,
                          -100, 100, 0.99
                      )
                   << "\n";
-        std::cerr << "Random_Query" << ',' << experiment_name << ',' << size
-                  << ','
-                  << Benchmark::Measure(
+        std::cerr << "Random_Query," << size << ',' << experiment_name << ','
+                  << Benchmark::MeasureTime(
                          MakeBenchmarkRandomParameterizedTest<RSQType>, size,
                          -100, 100, 0.01
                      )
                   << "\n";
-        std::cerr << "Constructor" << ',' << experiment_name << ',' << size
-                  << ',' << Benchmark::Measure(MakeConstructor<RSQType>, size)
+        std::cerr << "Constructor," << size << ',' << experiment_name << ','
+                  << Benchmark::MeasureTime(MakeConstructor<RSQType>, size)
                   << "\n";
     }
 
