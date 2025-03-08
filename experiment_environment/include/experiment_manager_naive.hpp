@@ -4,6 +4,7 @@
 #include <iostream>
 #include <naive.hpp>
 #include <segment_tree.hpp>
+#include <sqrt_rsq.hpp>
 #include <fenwick_tree.hpp>
 #include <down_segment_tree.hpp>
 #include <treap.hpp>
@@ -55,7 +56,7 @@ public:
 
     void RunExperiments() override {
         for (std::size_t size : random_sizes_) {
-            RunExperiment<NaiveRSQ>("NaiveRSQ", size);
+            // RunExperiment<NaiveRSQ>("NaiveRSQ", size);
             RunExperiment<SegmentTree>("SegmentTree", size);
             RunExperiment<SqrtRSQ>("SqrtRSQ", size);
             RunExperiment<FenwickTree>("FenwickTree", size);

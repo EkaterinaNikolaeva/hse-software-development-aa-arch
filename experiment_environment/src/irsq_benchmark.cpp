@@ -1,11 +1,8 @@
-#include <benchmark/benchmark.h>
-#include <experiment_manager_google.hpp>
 #include <experiment_manager_naive.hpp>
 #include <functional>
 #include <memory>
 #include <naive.hpp>
 #include <vector>
-#include "config_loader.hpp"
 #include "random_data_generator.hpp"
 
 // Конфиг должен содержать список размеров тестируемых наборов данных.
@@ -22,15 +19,13 @@
 // тестами.
 int main(int argc, char *argv[]) {
     try {
-        if (argc < 2) {
-            throw std::runtime_error(
-                "Error: Missing config file argument.\nUsage: ./benchmark "
-                "<config.json>"
-            );
-        }
-
-        std::string config_filename = argv[1];
-        std::vector<int> test_sizes = ConfigLoader::loadConfig(config_filename);
+        std::vector<int> test_sizes{10, 
+                                    100, 
+                                    1000, 
+                                    10000, 
+                                    100000, 
+                                    1000000,
+                                    10000000};
 
         // rsq::benchmark::ExperimentManagerGoogle experimentManagerGoogle(
         //     test_sizes
