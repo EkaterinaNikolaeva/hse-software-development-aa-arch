@@ -42,7 +42,6 @@ public:
     // Число виртуальный метод для изменения index-ого элемента массива на value
     virtual void Update(std::size_t index, int value) = 0;
 
-    // Виртуальный деструктор для корректного наследования
     virtual ~IRSQ() = default;
 };
 

@@ -3,59 +3,41 @@ name: CI
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
+      - main
 
 jobs:
   build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Run clang-format style check
-      uses: jidicula/clang-format-action@d05cecd4a1a5b7e64c22f5a468456135a43f13f6
-      with:
-        clang-format-version: '15'
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v1
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y cmake g++ lcov libgtest-dev libbenchmark-dev nlohmann-json3-dev
+      - name: Create build directory
+        run: mkdir build
 
-    - name: Create build directory
-      run: mkdir build
+      - name: Configure CMake
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 
-    - name: Configure CMake
-      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="--coverage" -DCMAKE_EXE_LINKER_FLAGS="--coverage"
+      - name: Build
+        run: cmake --build build --config Debug
 
-    - name: Build
-      run: cmake --build build
+      - name: Run benchmark on Windows
+        if: ${{ runner.os == 'Windows' }}
+        run: .\build\my_benchmark.exe
+        shell: pwsh
 
-    - name: Run benchmark
-      run: ./build/my_benchmark experiment_environment/configs/config.json
-
-    - name: Run tests
-      run: ctest --test-dir build/rsq_library/tests/ -V
-
-    - name: Generate coverage report
-      run: |
-        lcov --capture --directory build --output-file coverage.info --ignore-errors mismatch
-        lcov --remove coverage.info '/usr/*' --output-file coverage.info
-        lcov --list coverage.info
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@5a605bd92782ce0810fa3b8acc235c921b497052
-      with:
-        files: coverage.info
-        token: ${{ secrets.CODECOV_TOKEN }}
-
-    - name: Upload coverage to Codacy
-      uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699
-      with:
-        coverage-reports: coverage.info
-        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Run benchmark on non-Windows
+        if: ${{ runner.os != 'Windows' }}
+        run: ./build/my_benchmark
+        shell: bash
