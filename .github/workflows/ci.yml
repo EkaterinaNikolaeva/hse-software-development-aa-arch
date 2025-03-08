@@ -33,4 +33,9 @@ jobs:
         run: cmake --build build --config Debug
 
       - name: Run benchmark
-        run: ./build/my_benchmark
+        run: |
+          if [ ${{ runner.os }} == 'Windows' ]; then
+            .\build\my_benchmark.exe
+          else
+            ./build/my_benchmark
+          fi
