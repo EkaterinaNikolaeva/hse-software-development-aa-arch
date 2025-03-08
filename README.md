@@ -86,7 +86,6 @@ lcov --capture --directory build --output-file coverage.info && lcov --remove co
 docker build -t irsq_benchmark .
 docker run --rm --cpuset-cpus="0" --privileged irsq_benchmark 
 ```
-
 ## Внести вклад
 
 Мы будем рады, если вы присоединитесь к нашему сообществу!

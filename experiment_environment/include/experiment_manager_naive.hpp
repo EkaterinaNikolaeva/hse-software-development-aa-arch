@@ -1,11 +1,12 @@
 #ifndef EXPERIMENT_MANAGER_NAIVE_HPP
 #define EXPERIMENT_MANAGER_NAIVE_HPP
 
-#include <down_segment_tree.hpp>
-#include <fenwick_tree.hpp>
 #include <iostream>
 #include <naive.hpp>
 #include <segment_tree.hpp>
+#include <fenwick_tree.hpp>
+#include <down_segment_tree.hpp>
+#include <treap.hpp>
 #include <vector>
 #include "benchmark.hpp"
 #include "experiment_manager_base.hpp"
@@ -20,32 +21,36 @@ private:
     template <typename RSQType>
     void RunExperiment(const std::string &experiment_name, std::size_t size)
         const {
+        auto result = Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size);
         std::cerr << "Naive," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
+
+        result = Benchmark::MeasureTime(MakeRandomActions<RSQType>, size);
         std::cerr << "Random," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(MakeRandomActions<RSQType>, size)
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
+
+        result = Benchmark::MeasureTime(
+            MakeBenchmarkRandomParameterizedTest<RSQType>, size, -100, 100, 0.99
+        );
         std::cerr << "Random_Update," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(
-                         MakeBenchmarkRandomParameterizedTest<RSQType>, size,
-                         -100, 100, 0.99
-                     )
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
+
+        result = Benchmark::MeasureTime(
+            MakeBenchmarkRandomParameterizedTest<RSQType>, size, -100, 100, 0.01
+        );
         std::cerr << "Random_Query," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(
-                         MakeBenchmarkRandomParameterizedTest<RSQType>, size,
-                         -100, 100, 0.01
-                     )
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
+
+        result = Benchmark::MeasureTime(MakeConstructor<RSQType>, size);
         std::cerr << "Constructor," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(MakeConstructor<RSQType>, size)
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
     }
 
 public:
     explicit ExperimentManagerNaive(const std::vector<int> &sizes)
         : ExperimentManagerBase(sizes) {
+        std::cerr << "Benchmark_name,Algorithm_name,Size_of_structure,Time("
+                     "microseconds),Memory(KB)\n";
     }
 
     void RunExperiments() override {
@@ -53,8 +58,9 @@ public:
             RunExperiment<NaiveRSQ>("NaiveRSQ", size);
             RunExperiment<SegmentTree>("SegmentTree", size);
             RunExperiment<SqrtRSQ>("SqrtRSQ", size);
-            RunExperiment<FenwickTree>("Fenwick", size);
+            RunExperiment<FenwickTree>("FenwickTree", size);
             RunExperiment<DownSegmentTree>("DownSegmentTree", size);
+            RunExperiment<Treap>("Treap", size);
         }
     }
 };

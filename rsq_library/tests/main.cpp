@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <down_segment_tree.hpp>
 #include <irsq.hpp>
 #include <irsq_better_test.hpp>
 #include <irsq_random_test.hpp>
@@ -7,11 +6,13 @@
 #include <naive.hpp>
 #include <segment_tree.hpp>
 #include <sqrt_rsq.hpp>
+#include <down_segment_tree.hpp>
+#include <treap.hpp>
 
+using NaiveTest = rsq::tests::IRSQTest<rsq::NaiveRSQ>;
 using SegmentTreeTest = rsq::tests::IRSQTest<rsq::SegmentTree>;
 using SegmentTreeBetterTest = rsq::tests::IRSQBetterTest<rsq::SegmentTree>;
 using SegmentTreeRandomTest = rsq::tests::RandomIRSQTest<rsq::SegmentTree>;
-using NaiveTest = rsq::tests::IRSQTest<rsq::NaiveRSQ>;
 using SqrtRSQTest = rsq::tests::IRSQTest<rsq::SqrtRSQ>;
 using SqrtRSQRandmomTest = rsq::tests::RandomIRSQTest<rsq::SqrtRSQ>;
 using FenwickTest = rsq::tests::IRSQTest<rsq::SqrtRSQ>;
@@ -19,12 +20,15 @@ using FenwickRandmomTest = rsq::tests::RandomIRSQTest<rsq::SqrtRSQ>;
 using DownSegmentTreeTest = rsq::tests::IRSQTest<rsq::DownSegmentTree>;
 using DownSegmentTreeRandomTest =
     rsq::tests::RandomIRSQTest<rsq::DownSegmentTree>;
+using TreapTest = rsq::tests::IRSQTest<rsq::Treap>;
+using TreapRandomTest = rsq::tests::RandomIRSQTest<rsq::Treap>;
 
-TEST_F(SegmentTreeTest, BasicOperationsSegmentTree) {
+
+TEST_F(NaiveTest, BasicOperationsNaive) {
     SimpleTestIRSQ();
 }
 
-TEST_F(NaiveTest, BasicOperationsNaive) {
+TEST_F(SegmentTreeTest, BasicOperationsSegmentTree) {
     SimpleTestIRSQ();
 }
 
@@ -74,6 +78,14 @@ TEST_F(DownSegmentTreeTest, BasicOperations) {
 }
 
 TEST_F(DownSegmentTreeRandomTest, RandomOperations) {
+    RandomActionsTest();
+}
+
+TEST_F(TreapTest, BasicOperations) {
+    SimpleTestIRSQ();
+}
+
+TEST_F(TreapRandomTest, RandomOperations) {
     RandomActionsTest();
 }
 
