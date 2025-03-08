@@ -32,10 +32,12 @@ jobs:
       - name: Build
         run: cmake --build build --config Debug
 
-      - name: Run benchmark
-        run: |
-          if [ ${{ runner.os }} == 'Windows' ]; then
-            .\build\my_benchmark.exe
-          else
-            ./build/my_benchmark
-          fi
+      - name: Run benchmark on Windows
+        if: ${{ runner.os == 'Windows' }}
+        run: .\build\my_benchmark.exe
+        shell: pwsh
+
+      - name: Run benchmark on non-Windows
+        if: ${{ runner.os != 'Windows' }}
+        run: ./build/my_benchmark
+        shell: bash
