@@ -21,27 +21,29 @@ private:
     template <typename RSQType>
     void RunExperiment(const std::string &experiment_name, std::size_t size)
         const {
+        auto result = Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size);
         std::cerr << "Naive," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(MakeNaiveActions<RSQType>, size)
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
+
+        result = Benchmark::MeasureTime(MakeRandomActions<RSQType>, size);
         std::cerr << "Random," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(MakeRandomActions<RSQType>, size)
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
+
+        result = Benchmark::MeasureTime(
+            MakeBenchmarkRandomParameterizedTest<RSQType>, size, -100, 100, 0.99
+        );
         std::cerr << "Random_Update," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(
-                         MakeBenchmarkRandomParameterizedTest<RSQType>, size,
-                         -100, 100, 0.99
-                     )
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
+
+        result = Benchmark::MeasureTime(
+            MakeBenchmarkRandomParameterizedTest<RSQType>, size, -100, 100, 0.01
+        );
         std::cerr << "Random_Query," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(
-                         MakeBenchmarkRandomParameterizedTest<RSQType>, size,
-                         -100, 100, 0.01
-                     )
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
+
+        result = Benchmark::MeasureTime(MakeConstructor<RSQType>, size);
         std::cerr << "Constructor," << size << ',' << experiment_name << ','
-                  << Benchmark::MeasureTime(MakeConstructor<RSQType>, size)
-                  << "\n";
+                  << result.time << ',' << result.memory << "\n";
     }
 
 public:
